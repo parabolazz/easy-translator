@@ -2,7 +2,7 @@
 
 ## 背景
 
-Kiss Translator 当前在多个入口各自保存翻译服务：
+Easy Translator 当前在多个入口各自保存翻译服务：
 
 - 整页翻译的全局规则 `*` 使用 `apiSlug`
 - 输入框翻译使用 `inputRule.apiSlug`
@@ -105,7 +105,7 @@ Kiss Translator 当前在多个入口各自保存翻译服务：
 
 ### 设置模型
 
-在 [src/config/setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js) 中扩展 `DEFAULT_SETTING`，新增 `defaultApiSlug`。
+在 [src/config/setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js) 中扩展 `DEFAULT_SETTING`，新增 `defaultApiSlug`。
 
 同时补充一个小型归一化工具，用于：
 
@@ -117,8 +117,8 @@ Kiss Translator 当前在多个入口各自保存翻译服务：
 
 当前仓库的多个默认值分散在：
 
-- [src/config/rules.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/rules.js)
-- [src/config/setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js)
+- [src/config/rules.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/rules.js)
+- [src/config/setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js)
 
 这些位置今天都直接写死为 `OPT_TRANS_MICROSOFT`。本次不把所有常量直接改成读取运行时 setting，因为配置常量定义阶段并拿不到用户设置。
 
@@ -147,7 +147,7 @@ Kiss Translator 当前在多个入口各自保存翻译服务：
 
 ### API 设置页
 
-在 [src/views/Options/Apis.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Apis.js) 中新增默认服务设置区。
+在 [src/views/Options/Apis.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Apis.js) 中新增默认服务设置区。
 
 默认服务下拉框复用现有入口的选择规则，只允许选择当前已启用的 `apiSlug`：
 
@@ -185,7 +185,7 @@ Kiss Translator 当前在多个入口各自保存翻译服务：
 
 ### 单元测试
 
-补充 [src/config/setting.test.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/setting.test.js)，覆盖：
+补充 [src/config/setting.test.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/setting.test.js)，覆盖：
 
 - 旧设置缺少 `defaultApiSlug` 时会被补默认值
 - 已存在 `defaultApiSlug` 时保持原值
@@ -212,8 +212,8 @@ Kiss Translator 当前在多个入口各自保存翻译服务：
 
 ## 主要影响范围
 
-- [src/config/setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js)：新增 `defaultApiSlug` 与归一化逻辑
-- [src/views/Options/Apis.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Apis.js)：新增“默认服务”设置区与一键应用入口
-- [src/hooks/Setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/hooks/Setting.js)：补老设置回填
-- [src/hooks/Rules.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/hooks/Rules.js)：用于更新全局规则
-- [src/config/i18n.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/i18n.js)：新增默认服务文案
+- [src/config/setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js)：新增 `defaultApiSlug` 与归一化逻辑
+- [src/views/Options/Apis.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Apis.js)：新增“默认服务”设置区与一键应用入口
+- [src/hooks/Setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/hooks/Setting.js)：补老设置回填
+- [src/hooks/Rules.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/hooks/Rules.js)：用于更新全局规则
+- [src/config/i18n.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/i18n.js)：新增默认服务文案

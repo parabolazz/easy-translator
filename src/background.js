@@ -46,11 +46,11 @@ globalThis.__KISS_CONTEXT__ = "background";
 async function updateIcon(isActive, tabId) {
   const suffix = isActive ? "_active" : "";
   const path = {
-    16: `images/logo16${suffix}.png`,
-    32: `images/logo32${suffix}.png`,
-    48: `images/logo48${suffix}.png`,
-    128: `images/logo128${suffix}.png`,
-    192: `images/logo192${suffix}.png`,
+    16: `/images/logo16${suffix}.png`,
+    32: `/images/logo32${suffix}.png`,
+    48: `/images/logo48${suffix}.png`,
+    128: `/images/logo128${suffix}.png`,
+    192: `/images/logo192${suffix}.png`,
   };
   try {
     // 兼容 v2 清单下的 Firefox

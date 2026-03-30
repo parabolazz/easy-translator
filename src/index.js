@@ -31,7 +31,7 @@ function App() {
       <Divider>
         <Link
           href={process.env.REACT_APP_HOMEPAGE}
-        >{`KISS Translator v${process.env.REACT_APP_VERSION}`}</Link>
+        >{`Easy Translator v${process.env.REACT_APP_VERSION}`}</Link>
       </Divider>
       <Stack spacing={2}>
         <Link href={process.env.REACT_APP_USERSCRIPT_DOWNLOADURL}>

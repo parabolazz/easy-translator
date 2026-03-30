@@ -511,7 +511,7 @@ export class Translator {
 
   #attachShadowRootListener() {
     if (!this.#isShadowRootJsInjected) {
-      const id = "kiss-translator-inject-shadowroot-js";
+      const id = "easy-translator-inject-shadowroot-js";
       injectJs(INJECTOR.shadowroot, id);
 
       this.#isShadowRootJsInjected = true;
@@ -1307,11 +1307,7 @@ export class Translator {
       );
       let translatedText = trText;
       const isSameLang = isSame;
-      translatedText = await maybeAnnotateTranslatedText({
-        translatedText,
-        targetLang: toLang,
-        cefrSetting: this.#setting.cefrSetting,
-      });
+
       if (this.#runId !== currentRunId) {
         throw new Error("Request terminated");
       }
@@ -1862,7 +1858,7 @@ export class Translator {
       //   injectCss && sendBgMsg(MSG_INJECT_CSS, injectCss);
       // } else {
       //   injectJs &&
-      //     injectInlineJs(injectJs, "kiss-translator-userinit-injector");
+      //     injectInlineJs(injectJs, "easy-translator-userinit-injector");
       //   injectCss && injectInternalCss(injectCss);
       // }
 

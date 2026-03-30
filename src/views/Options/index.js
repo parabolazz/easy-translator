@@ -70,7 +70,7 @@ export default function Options() {
 
           if (++i > 8) {
             setError(
-              "Time out. Please confirm whether to install or enable KISS Translator GreaseMonkey script? 连接超时，请检查是否安装或启用简约翻译油猴脚本。"
+              "Time out. Please confirm whether to install or enable Easy Translator GreaseMonkey script? 连接超时，请检查是否安装或启用轻松翻译油猴脚本。"
             );
             return;
           }
@@ -91,7 +91,7 @@ export default function Options() {
         <Divider>
           <Link
             href={process.env.REACT_APP_HOMEPAGE}
-          >{`KISS Translator v${process.env.REACT_APP_VERSION}`}</Link>
+          >{`Easy Translator v${process.env.REACT_APP_VERSION}`}</Link>
         </Divider>
         <Alert severity="error">{error}</Alert>
         <Stack spacing={2}>

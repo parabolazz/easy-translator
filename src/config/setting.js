@@ -25,7 +25,7 @@ export const TRANS_MIN_LENGTH = 2; // 最短翻译长度
 export const TRANS_MAX_LENGTH = 100000; // 最长翻译长度
 export const TRANS_NEWLINE_LENGTH = 20; // 换行字符数
 export const DEFAULT_BLACKLIST = [
-  "https://fishjar.github.io/kiss-translator/options.html",
+  "https://fishjar.github.io/easy-translator/options.html",
   "https://translate.google.com",
   "https://www.deepl.com/translator",
 ]; // 禁用翻译名单

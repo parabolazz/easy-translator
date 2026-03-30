@@ -31,7 +31,7 @@ function runSettingPage() {
     // window.eval(`(${injectScript})("${ping}")`); // eslint-disable-line
     injectInlineJs(
       `(${injectScript})("${ping}")`,
-      "kiss-translator-options-injector"
+      "easy-translator-options-injector"
     );
   }
 }

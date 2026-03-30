@@ -69,7 +69,7 @@
 No worktree directory found. Where should I create worktrees?
 
 1. .worktrees/ (project-local, hidden)
-2. ~/.config/superpowers/worktrees/kiss-translator/ (global location)
+2. ~/.config/superpowers/worktrees/easy-translator/ (global location)
 
 Which would you prefer?
 ```
@@ -100,9 +100,9 @@ cd .worktrees/cefr-original-word-annotation
 如果用户选全局 worktree，运行：
 
 ```bash
-mkdir -p ~/.config/superpowers/worktrees/kiss-translator
-git worktree add ~/.config/superpowers/worktrees/kiss-translator/cefr-original-word-annotation -b codex/cefr-original-word-annotation
-cd ~/.config/superpowers/worktrees/kiss-translator/cefr-original-word-annotation
+mkdir -p ~/.config/superpowers/worktrees/easy-translator
+git worktree add ~/.config/superpowers/worktrees/easy-translator/cefr-original-word-annotation -b codex/cefr-original-word-annotation
+cd ~/.config/superpowers/worktrees/easy-translator/cefr-original-word-annotation
 ```
 
 Expected: 新分支 `codex/cefr-original-word-annotation` 创建成功，工作目录干净。
@@ -1053,14 +1053,14 @@ test("removeCEFRAnnotations keeps sibling translation wrappers untouched", () =>
         ubiquitous
         <span class="kiss-cefr-gloss" aria-hidden="true">普遍的</span>
       </span>
-      <kiss-translator class="kiss-translator-wrapper">普遍存在的</kiss-translator>
+      <easy-translator class="easy-translator-wrapper">普遍存在的</easy-translator>
     </div>
   `;
 
   const root = document.getElementById("root");
   removeCEFRAnnotations(root);
 
-  expect(root.querySelector(".kiss-translator-wrapper")).not.toBeNull();
+  expect(root.querySelector(".easy-translator-wrapper")).not.toBeNull();
   expect(root.textContent).toContain("普遍存在的");
 });
 ```

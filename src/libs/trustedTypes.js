@@ -1,7 +1,7 @@
 import { logger } from "./log";
 
 export const trustedTypesHelper = (() => {
-  const POLICY_NAME = "kiss-translator-policy";
+  const POLICY_NAME = "easy-translator-policy";
   let policy = null;
 
   if (globalThis.trustedTypes && globalThis.trustedTypes.createPolicy) {

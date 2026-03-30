@@ -11,4 +11,4 @@ export const URL_KISS_RULES = "https://github.com/fishjar/kiss-rules";
 export const URL_KISS_RULES_NEW_ISSUE =
   "https://github.com/fishjar/kiss-rules/issues/new";
 export const URL_RAW_PREFIX =
-  "https://raw.githubusercontent.com/fishjar/kiss-translator/master";
+  "https://raw.githubusercontent.com/fishjar/easy-translator/master";

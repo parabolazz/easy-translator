@@ -83,7 +83,7 @@
 
 ### 默认语言改动
 
-在 [src/config/setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js) 中将：
+在 [src/config/setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js) 中将：
 
 ```js
 uiLang: "en"
@@ -104,7 +104,7 @@ uiLang: "zh"
 
 ### 主题升级
 
-在 [src/hooks/Theme.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/hooks/Theme.js) 中扩展主题，而不仅仅设置 `palette.mode`：
+在 [src/hooks/Theme.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/hooks/Theme.js) 中扩展主题，而不仅仅设置 `palette.mode`：
 
 - 为浅色模式定义更有层次的背景色
 - 为卡片、边框、主色、文本层级定义更完整的 token
@@ -115,7 +115,7 @@ uiLang: "zh"
 
 ### 设置页壳层
 
-在 [src/views/Options/Layout.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Layout.js) 中重做页面壳层：
+在 [src/views/Options/Layout.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Layout.js) 中重做页面壳层：
 
 - 页面整体增加背景层
 - 主体区域限制最大宽度，避免超宽屏幕上内容过散
@@ -124,7 +124,7 @@ uiLang: "zh"
 
 ### 顶部头部
 
-在 [src/views/Options/Header.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Header.js) 中把现在的单条 `AppBar` 升级为更现代的顶部区域：
+在 [src/views/Options/Header.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Header.js) 中把现在的单条 `AppBar` 升级为更现代的顶部区域：
 
 - 保留品牌链接和深浅色切换
 - 增加更好的留白和层次
@@ -133,7 +133,7 @@ uiLang: "zh"
 
 ### 左侧导航
 
-在 [src/views/Options/Navigator.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Navigator.js) 中调整导航表现：
+在 [src/views/Options/Navigator.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Navigator.js) 中调整导航表现：
 
 - 把当前纯列表按钮风格升级为更轻的导航胶囊/卡片风格
 - 当前选中项更明确，但不要太重
@@ -158,7 +158,7 @@ uiLang: "zh"
 
 ### 首屏页面重点
 
-基础设置页 [src/views/Options/Setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Setting.js) 应成为新的视觉样板页：
+基础设置页 [src/views/Options/Setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Setting.js) 应成为新的视觉样板页：
 
 - 顶部先展示页面标题与一句简短说明
 - 导入/导出等操作做成工具按钮区
@@ -216,12 +216,12 @@ API 页和 CEFR 页也应跟随同一套节奏：
 
 ## 主要影响范围
 
-- [src/config/setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js)：默认语言改为中文
-- [src/hooks/Theme.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/hooks/Theme.js)：扩展现代化主题 token 与组件样式
-- [src/views/Options/Layout.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Layout.js)：重做设置页壳层
-- [src/views/Options/Header.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Header.js)：升级顶部头部样式
-- [src/views/Options/Navigator.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Navigator.js)：升级左侧导航视觉
-- [src/views/Options/Setting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Setting.js)：做为基础样板页整理内容分组
-- [src/views/Options/Apis.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Apis.js)：对齐新的页面结构和卡片节奏
-- [src/views/Options/CEFRSetting.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/CEFRSetting.js)：对齐新的页面结构和视觉语言
-- [src/views/Options/About.js](/Users/kaen/Projects/kiss-translator/.worktrees/cefr-original-word-annotation/src/views/Options/About.js)：让说明页也适配新的内容面板风格
+- [src/config/setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/config/setting.js)：默认语言改为中文
+- [src/hooks/Theme.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/hooks/Theme.js)：扩展现代化主题 token 与组件样式
+- [src/views/Options/Layout.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Layout.js)：重做设置页壳层
+- [src/views/Options/Header.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Header.js)：升级顶部头部样式
+- [src/views/Options/Navigator.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Navigator.js)：升级左侧导航视觉
+- [src/views/Options/Setting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Setting.js)：做为基础样板页整理内容分组
+- [src/views/Options/Apis.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/Apis.js)：对齐新的页面结构和卡片节奏
+- [src/views/Options/CEFRSetting.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/CEFRSetting.js)：对齐新的页面结构和视觉语言
+- [src/views/Options/About.js](/Users/kaen/Projects/easy-translator/.worktrees/cefr-original-word-annotation/src/views/Options/About.js)：让说明页也适配新的内容面板风格

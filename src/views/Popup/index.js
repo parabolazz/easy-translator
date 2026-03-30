@@ -122,7 +122,7 @@ export default function Popup() {
               variant="text"
               onClick={() => {
                 window.open(
-                  "https://chromewebstore.google.com/detail/kiss-translator/bdiifdefkgmcblbcghdlonllpjhhjgof/reviews",
+                  "https://chromewebstore.google.com/detail/easy-translator/bdiifdefkgmcblbcghdlonllpjhhjgof/reviews",
                   "_blank"
                 );
               }}
@@ -133,7 +133,7 @@ export default function Popup() {
               variant="text"
               onClick={() => {
                 window.open(
-                  "https://github.com/fishjar/kiss-translator#%E8%B5%9E%E8%B5%8F",
+                  "https://github.com/fishjar/easy-translator#%E8%B5%9E%E8%B5%8F",
                   "_blank"
                 );
               }}

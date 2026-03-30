@@ -1,10 +1,10 @@
-# KISS Translator 심플 번역
+# Easy Translator 심플 번역
 
 [English](README.en.md) | [中文](README.md) | [日本語](README.ja.md) | [한국어](README.ko.md)
 
-심플하고 오픈 소스인 [이중 언어 대조 번역 확장 프로그램 & 유저 스크립트](https://github.com/fishjar/kiss-translator)입니다.
+심플하고 오픈 소스인 [이중 언어 대조 번역 확장 프로그램 & 유저 스크립트](https://github.com/fishjar/easy-translator)입니다.
 
-[kiss-translator.webm](https://github.com/fishjar/kiss-translator/assets/1157624/f7ba8a5c-e4a8-4d5a-823a-5c5c67a0a47f)
+[easy-translator.webm](https://github.com/fishjar/easy-translator/assets/1157624/f7ba8a5c-e4a8-4d5a-823a-5c5c67a0a47f)
 
 ## 특징
 
@@ -74,19 +74,19 @@
 > - 유저 스크립트는 사용상 더 많은 문제 (크로스 도메인 문제, 스크립트 충돌 등)를 겪을 수 있습니다.
 
 - [x] 브라우저 확장 프로그램
-  - [x] Chrome [설치 주소](https://chrome.google.com/webstore/detail/kiss-translator/bdiifdefkgmcblbcghdlonllpjhhjgof?hl=ko)
+  - [x] Chrome [설치 주소](https://chrome.google.com/webstore/detail/easy-translator/bdiifdefkgmcblbcghdlonllpjhhjgof?hl=ko)
     - [x] Kiwi (Android)
     - [x] Orion (iOS)
   - [x] Edge [설치 주소](https://microsoftedge.microsoft.com/addons/detail/%E7%AE%80%E7%BA%A6%E7%BF%BB%E8%AF%91/jemckldkclkinpjighnoilpbldbdmmlh?hl=ko)
-  - [x] Firefox [설치 주소](https://addons.mozilla.org/ko/firefox/addon/kiss-translator/)
+  - [x] Firefox [설치 주소](https://addons.mozilla.org/ko/firefox/addon/easy-translator/)
   - [ ] Safari
     - [ ] Safari (Mac)
     - [ ] Safari (iOS) 
-  - [x] Thunderbird [다운로드 주소](https://github.com/fishjar/kiss-translator/releases)
+  - [x] Thunderbird [다운로드 주소](https://github.com/fishjar/easy-translator/releases)
 - [x] 유저 스크립트
-  - [x] Chrome/Edge/Firefox ([Tampermonkey](https://www.tampermonkey.net/)/[Violentmonkey](https://violentmonkey.github.io/)) [설치 링크](https://fishjar.github.io/kiss-translator/kiss-translator.user.js)
-    - [Greasy Fork](https://greasyfork.org/zh-CN/scripts/472840-kiss-translator)
-  - [x] iOS Safari ([Userscripts Safari](https://github.com/quoid/userscripts)) [설치 링크](https://fishjar.github.io/kiss-translator/kiss-translator-ios-safari.user.js)
+  - [x] Chrome/Edge/Firefox ([Tampermonkey](https://www.tampermonkey.net/)/[Violentmonkey](https://violentmonkey.github.io/)) [설치 링크](https://fishjar.github.io/easy-translator/easy-translator.user.js)
+    - [Greasy Fork](https://greasyfork.org/zh-CN/scripts/472840-easy-translator)
+  - [x] iOS Safari ([Userscripts Safari](https://github.com/quoid/userscripts)) [설치 링크](https://fishjar.github.io/easy-translator/easy-translator-ios-safari.user.js)
 
 ## 관련 프로젝트
 
@@ -121,12 +121,12 @@
   - 예를 들어 `Ollama`는 네이티브 인터페이스 주소와 `Openai` 호환 주소가 있습니다. 본 플러그인은 현재 `Openai` 호환 주소를 통일되게 지원하며, `Ollama` 네이티브 인터페이스 주소는 지원하지 않습니다.
 - 일부 AI 모델이 통합 번역을 지원하지 않는 경우:
   - 이 경우 통합 번역을 비활성화하거나 사용자 정의 인터페이스 방식을 통해 사용할 수 있습니다.
-  - 또는 사용자 정의 인터페이스 방식을 통해 사용합니다. 자세한 내용은 [사용자 정의 인터페이스 예시 문서](https://github.com/fishjar/kiss-translator/blob/master/custom-api_v2.md)를 참조하세요.
+  - 또는 사용자 정의 인터페이스 방식을 통해 사용합니다. 자세한 내용은 [사용자 정의 인터페이스 예시 문서](https://github.com/fishjar/easy-translator/blob/master/custom-api_v2.md)를 참조하세요.
 - 일부 AI 모델의 파라미터가 일치하지 않는 경우:
   - 예를 들어 `Gemini` 네이티브 인터페이스 파라미터는 매우 불일치하며, 일부 버전의 모델은 특정 파라미터를 지원하지 않아 오류를 반환할 수 있습니다.
   - 이 경우 `Hook`을 사용하여 요청 `body`를 수정하거나, `Gemini2` (`Openai` 호환 주소)로 변경할 수 있습니다.
 - 서버의 크로스 도메인 접근 제한으로 403 오류가 반환되는 경우:
-  - 예를 들어 `Ollama` 시작 시 환경 변수 `OLLAMA_ORIGINS=*`를 추가해야 합니다. 참고: https://github.com/fishjar/kiss-translator/issues/174
+  - 예를 들어 `Ollama` 시작 시 환경 변수 `OLLAMA_ORIGINS=*`를 추가해야 합니다. 참고: https://github.com/fishjar/easy-translator/issues/174
 
 ### 입력한 인터페이스를 유저 스크립트에서 사용할 수 없습니다
 
@@ -136,11 +136,11 @@
 
 사용자 정의 인터페이스 기능은 매우 강력하고 유연하며, 이론적으로 어떤 번역 인터페이스든 연결할 수 있습니다.
 
-예시 참고: [custom-api_v2.md](https://github.com/fishjar/kiss-translator/blob/master/custom-api_v2.md)
+예시 참고: [custom-api_v2.md](https://github.com/fishjar/easy-translator/blob/master/custom-api_v2.md)
 
 ### 유저 스크립트 설정 페이지로 바로 이동하는 방법
 
-설정 페이지 주소: https://fishjar.github.io/kiss-translator/options.html
+설정 페이지 주소: https://fishjar.github.io/easy-translator/options.html
 
 ## 향후 계획 
 
@@ -153,13 +153,13 @@
 - [x] **YouTube 자막 지원 최적화**: 스트리밍 자막의 병합 및 번역 경험을 개선하고, 끊김을 줄입니다.
 - [ ] **규칙 공동 구축 메커니즘 업그레이드**: 더 유연한 규칙 공유, 버전 관리 및 커뮤니티 검토 프로세스를 도입합니다.
  
- 특정 방향에 관심이 있다면, [Issues](https://github.com/fishjar/kiss-translator/issues)에서 토론하거나 PR을 제출해 주세요!
+ 특정 방향에 관심이 있다면, [Issues](https://github.com/fishjar/easy-translator/issues)에서 토론하거나 PR을 제출해 주세요!
 
 ## 개발 가이드
 
 ```sh
-git clone [https://github.com/fishjar/kiss-translator.git](https://github.com/fishjar/kiss-translator.git)
-cd kiss-translator
+git clone [https://github.com/fishjar/easy-translator.git](https://github.com/fishjar/easy-translator.git)
+cd easy-translator
 git checkout dev # PR 제출 시 dev 브랜치로 푸시하는 것을 권장합니다
 pnpm install
 pnpm build
@@ -183,7 +183,7 @@ window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "togg
 
 ## 후원
 
-![appreciate](https://github.com/fishjar/kiss-translator/assets/1157624/ebaecabe-2934-4172-8085-af236f5ee399)
+![appreciate](https://github.com/fishjar/easy-translator/assets/1157624/ebaecabe-2934-4172-8085-af236f5ee399)
 
 ## 스폰서
 

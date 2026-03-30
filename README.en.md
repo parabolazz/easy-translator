@@ -1,10 +1,10 @@
-# KISS Translator
+# Easy Translator
 
 [English](README.en.md) | [中文](README.md) | [日本語](README.ja.md) | [한국어](README.ko.md)
 
-A simple, open source [bilingual translation extension & Greasemonkey script](https://github.com/fishjar/kiss-translator).
+A simple, open source [bilingual translation extension & Greasemonkey script](https://github.com/fishjar/easy-translator).
 
-[kiss-translator.webm](https://github.com/fishjar/kiss-translator/assets/1157624/f7ba8a5c-e4a8-4d5a-823a-5c5c67a0a47f)
+[easy-translator.webm](https://github.com/fishjar/easy-translator/assets/1157624/f7ba8a5c-e4a8-4d5a-823a-5c5c67a0a47f)
 
 ## Features
 
@@ -74,19 +74,19 @@ A simple, open source [bilingual translation extension & Greasemonkey script](ht
 > - Grease Monkey script will encounter more usage problems (cross domain issues, script conflicts, etc.)
 
 - [x] Browser extension
-  - [x] Chrome [Installation address](https://chrome.google.com/webstore/detail/kiss-translator/bdiifdefkgmcblbcghdlonllpjhhjgof?hl=en)
+  - [x] Chrome [Installation address](https://chrome.google.com/webstore/detail/easy-translator/bdiifdefkgmcblbcghdlonllpjhhjgof?hl=en)
     - [x] Kiwi (Android)
     - [x] Orion (iOS)
   - [x] Edge [Installation address](https://microsoftedge.microsoft.com/addons/detail/%E7%AE%80%E7%BA%A6%E7%BF%BB%E8%AF%91/jemckldkclkinpjighnoilpbldbdmmlh?hl=en)
-  - [x] Firefox [Installation address](https://addons.mozilla.org/en-US/firefox/addon/kiss-translator/)
+  - [x] Firefox [Installation address](https://addons.mozilla.org/en-US/firefox/addon/easy-translator/)
   - [ ] Safari
     - [ ] Safari (Mac)
     - [ ] Safari (iOS)
-  - [x] Thunderbird [Download address](https://github.com/fishjar/kiss-translator/releases)
+  - [x] Thunderbird [Download address](https://github.com/fishjar/easy-translator/releases)
 - [x] GreaseMonkey Script
-  - [x] Chrome/Edge/Firefox ([Tampermonkey](https://www.tampermonkey.net/)/[Violentmonkey](https://violentmonkey.github.io/)) [Installation link](https://fishjar.github.io/kiss-translator/kiss-translator.user.js)
-    - [Greasy Fork](https://greasyfork.org/zh-CN/scripts/472840-kiss-translator)
-  - [x] iOS Safari ([Userscripts Safari](https://github.com/quoid/userscripts)) [Installation link](https://fishjar.github.io/kiss-translator/kiss-translator-ios-safari.user.js)
+  - [x] Chrome/Edge/Firefox ([Tampermonkey](https://www.tampermonkey.net/)/[Violentmonkey](https://violentmonkey.github.io/)) [Installation link](https://fishjar.github.io/easy-translator/easy-translator.user.js)
+    - [Greasy Fork](https://greasyfork.org/zh-CN/scripts/472840-easy-translator)
+  - [x] iOS Safari ([Userscripts Safari](https://github.com/quoid/userscripts)) [Installation link](https://fishjar.github.io/easy-translator/easy-translator-ios-safari.user.js)
 
 ## Associated Projects
 
@@ -121,12 +121,12 @@ Common reasons for API test failures include:
   - For example, `Ollama` has a native API address and an `Openai`-compatible address. This plugin currently supports the `Openai`-compatible address and does not support the `Ollama` native API address.
 - Some AI models do not support batch translation:
   - In this case, you can choose to disable batch translation or use a custom API.
-  - Alternatively, you can use a custom API. For details, please refer to: [Custom API Example Documentation](https://github.com/fishjar/kiss-translator/blob/master/custom-api_v2.md)
+  - Alternatively, you can use a custom API. For details, please refer to: [Custom API Example Documentation](https://github.com/fishjar/easy-translator/blob/master/custom-api_v2.md)
 - Some AI models have inconsistent parameters:
   - For example, the parameters of the `Gemini` native API are highly inconsistent. Some model versions do not support certain parameters, leading to errors.
   - In this case, you can modify the request body using a `Hook`, or replace it with `Gemini2` (an OpenAI-compatible address).
 - The server restricts cross-origin access, returning a 403 error:
-  - For example, `Ollama` requires adding the environment variable `OLLAMA_ORIGINS=*` when starting. See: https://github.com/fishjar/kiss-translator/issues/174
+  - For example, `Ollama` requires adding the environment variable `OLLAMA_ORIGINS=*` when starting. See: https://github.com/fishjar/easy-translator/issues/174
 
 ### Custom API doesn't work in Tampermonkey scripts
 
@@ -136,11 +136,11 @@ Tampermonkey scripts require adding domains to the whitelist; otherwise, request
 
 Custom APIs are very powerful and flexible, and can theoretically connect to any translation API.
 
-Example reference: [custom-api_v2.md](https://github.com/fishjar/kiss-translator/blob/master/custom-api_v2.md)
+Example reference: [custom-api_v2.md](https://github.com/fishjar/easy-translator/blob/master/custom-api_v2.md)
 
 ### How to directly access the Tampermonkey script settings page
 
-Settings page address: https://fishjar.github.io/kiss-translator/options.html
+Settings page address: https://fishjar.github.io/easy-translator/options.html
 
 ## Future Plans 
 
@@ -153,13 +153,13 @@ Settings page address: https://fishjar.github.io/kiss-translator/options.html
 - [x] **Improved YouTube Subtitle Support**: Enhance merging and translation experience for streaming subtitles, reducing sentence fragmentation.
 - [ ] **Upgraded Rule Collaboration System**: Introduce more flexible rule sharing, version management, and community review processes.
 
- If you're interested in any of these directions, feel free to discuss in [Issues](https://github.com/fishjar/kiss-translator/issues) or submit a PR!
+ If you're interested in any of these directions, feel free to discuss in [Issues](https://github.com/fishjar/easy-translator/issues) or submit a PR!
 
 ## Development Guidelines
 
 ```sh
-git clone https://github.com/fishjar/kiss-translator.git
-cd kiss-translator
+git clone https://github.com/fishjar/easy-translator.git
+cd easy-translator
 git checkout dev # Submit a PR suggestion to push to the dev branch
 pnpm install
 pnpm build
@@ -183,7 +183,7 @@ window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "togg
 
 ## Appreciate
 
-![appreciate](https://github.com/fishjar/kiss-translator/assets/1157624/ebaecabe-2934-4172-8085-af236f5ee399)
+![appreciate](https://github.com/fishjar/easy-translator/assets/1157624/ebaecabe-2934-4172-8085-af236f5ee399)
 
 ## Sponsors
 

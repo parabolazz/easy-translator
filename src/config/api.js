@@ -621,7 +621,7 @@ const defaultApiOpts = {
     ...defaultApi,
     url: "https://api.openai.com/v1/chat/completions",
     model: "gpt-4",
-    useBatchFetch: true,
+    batchLength: 1000,
   },
   [OPT_TRANS_GEMINI]: {
     ...defaultApi,

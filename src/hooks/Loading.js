@@ -8,7 +8,11 @@ export default function Loading() {
       <Divider>
         <Link
           href={process.env.REACT_APP_HOMEPAGE}
-        >{`KISS Translator v${process.env.REACT_APP_VERSION}`}</Link>
+        >
+          {process.env.REACT_APP_NAME === "easy-translator"
+            ? `轻松翻译 / Easy Translator v${process.env.REACT_APP_VERSION}`
+            : `Easy Translator v${process.env.REACT_APP_VERSION}`}
+        </Link>
       </Divider>
       <CircularProgress />
     </center>

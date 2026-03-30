@@ -33,7 +33,7 @@ const CEFR_STYLE_TEXT = `
   transform: translate(-50%, -0.2em);
   white-space: nowrap;
   pointer-events: auto;
-  font-size: 0.72em;
+  font-size: 0.68em;
   line-height: 1;
   color: currentColor;
   opacity: 0.56;

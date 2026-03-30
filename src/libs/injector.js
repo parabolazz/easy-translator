@@ -1,7 +1,7 @@
 import { trustedTypesHelper } from "./trustedTypes";
 
 // Function to inject inline JavaScript code
-export const injectInlineJs = (code, id = "kiss-translator-inline-js") => {
+export const injectInlineJs = (code, id = "easy-translator-inline-js") => {
   if (document.getElementById(id)) {
     return;
   }
@@ -14,7 +14,7 @@ export const injectInlineJs = (code, id = "kiss-translator-inline-js") => {
   (document.head || document.documentElement).appendChild(el);
 };
 
-export const injectInlineJsBg = (code, id = "kiss-translator-inline-js") => {
+export const injectInlineJsBg = (code, id = "easy-translator-inline-js") => {
   if (document.getElementById(id)) {
     return;
   }
@@ -28,7 +28,7 @@ export const injectInlineJsBg = (code, id = "kiss-translator-inline-js") => {
 };
 
 // Function to inject external JavaScript file
-export const injectExternalJs = (src, id = "kiss-translator-external-js") => {
+export const injectExternalJs = (src, id = "easy-translator-external-js") => {
   if (document.getElementById(id)) {
     return;
   }

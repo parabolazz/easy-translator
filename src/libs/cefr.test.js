@@ -298,7 +298,7 @@ describe("cefr helpers", () => {
     const textNode = document.createTextNode("Mitigate ambiguity carefully.");
     host.appendChild(textNode);
 
-    const translationWrapper = document.createElement("kiss-translator");
+    const translationWrapper = document.createElement("easy-translator");
     translationWrapper.className = "kiss-wrapper notranslate";
     translationWrapper.innerHTML =
       '<span class="kiss-inner">Translated sibling stays put.</span>';

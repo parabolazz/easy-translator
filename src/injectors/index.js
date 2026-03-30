@@ -14,7 +14,7 @@ const injectorMap = {
   [INJECTOR.shadowroot]: shadowRootInjector,
 };
 
-export function injectJs(name, id = "kiss-translator-inject-js") {
+export function injectJs(name, id = "easy-translator-inject-js") {
   const injector = injectorMap[name];
   if (!injector) return;
 

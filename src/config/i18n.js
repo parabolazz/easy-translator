@@ -182,11 +182,11 @@ async ({ res, ...args }) => {
 
 export const I18N = {
   app_name: {
-    zh: `简约翻译`,
-    en: `KISS Translator`,
+    zh: `轻松翻译`,
+    en: `Easy Translator`,
     zh_TW: `簡約翻譯`,
-    ja: `KISS Translator`,
-    ko: `KISS Translator`,
+    ja: `Easy Translator`,
+    ko: `Easy Translator`,
   },
   translate: {
     zh: `翻译`,
