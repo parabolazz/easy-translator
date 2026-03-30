@@ -76,6 +76,10 @@ export default function TranForm({
   }, [text]);
 
   useEffect(() => {
+    setApiSlugs(initApiSlugs);
+  }, [initApiSlugs]);
+
+  useEffect(() => {
     if (!editMode) {
       setEditText(text);
     }
@@ -144,7 +148,6 @@ export default function TranForm({
     const validSlugs = new Set(optApis.map((api) => api.key));
     return apiSlugs.filter((slug) => validSlugs.has(slug));
   }, [apiSlugs, optApis]);
-
 
   return (
     <Stack spacing={simpleStyle ? 1 : 2}>

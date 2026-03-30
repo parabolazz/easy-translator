@@ -1,0 +1,65 @@
+<h2>Word Annotation Layout</h2>
+<p class="subtitle">目标：中文释义浮在英文单词上方，但不把原文行高撑开，也不改双语译文区的排版。</p>
+
+<div class="cards">
+  <div class="card" data-choice="ruby-flow" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. Ruby / RT</div>
+        <div class="mockup-body" style="padding: 20px; line-height: 2.1; font-size: 18px;">
+          <div style="color: #7c2d12; font-size: 13px; margin-bottom: 10px;">会把行高一起撑大</div>
+          <p style="margin: 0;">
+            The
+            <span style="display:inline-block; text-align:center; margin: 0 3px;">
+              <span style="display:block; font-size: 12px; color:#6b7280;">普遍的</span>
+              <span>ubiquitous</span>
+            </span>
+            use of AI changes how people read online content.
+          </p>
+          <p style="margin: 16px 0 0; opacity: 0.7;">上一行和下一行的距离会被明显拉开。</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Flow Layout</h3>
+      <p>语义自然，但会参与文档流，容易把行距撑开，不符合这次需求。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="absolute-overlay" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. Absolute Overlay</div>
+        <div class="mockup-body" style="padding: 20px; line-height: 1.5; font-size: 18px;">
+          <div style="color: #166534; font-size: 13px; margin-bottom: 10px;">释义脱离文档流，覆盖在单词上方</div>
+          <p style="margin: 0; position: relative;">
+            The
+            <span style="position:relative; display:inline-block; margin: 0 3px;">
+              <span style="position:absolute; left:50%; bottom:100%; transform:translate(-50%, -4px); white-space:nowrap; font-size:12px; line-height:1; color:#0f172a; background:#fef3c7; padding:2px 6px; border-radius:999px; box-shadow:0 1px 4px rgba(15,23,42,0.15);">普遍的</span>
+              <span>ubiquitous</span>
+            </span>
+            use of AI changes how people read online content.
+          </p>
+          <p style="margin: 16px 0 0; opacity: 0.7;">正文行高保持不变，双语译文区也可以完全不受影响。</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Recommended</h3>
+      <p>保留原文排版，只给生词额外挂一个绝对定位的中文提示层。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Planned DOM Shape</h3>
+  <div class="mockup">
+    <div class="mockup-header">Original English Node Only</div>
+    <div class="mockup-body" style="padding: 18px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px;">
+      &lt;span class="kiss-cefr-word"&gt;<br>
+      &nbsp;&nbsp;ubiquitous<br>
+      &nbsp;&nbsp;&lt;span class="kiss-cefr-gloss"&gt;普遍的&lt;/span&gt;<br>
+      &lt;/span&gt;
+    </div>
+  </div>
+</div>

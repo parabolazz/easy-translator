@@ -127,6 +127,7 @@ export default function Options() {
                   <Route path="subtitle" element={<SubtitleSetting />} />
                   <Route path="apis" element={<Apis />} />
                   <Route path="sync" element={<SyncSetting />} />
+                  <Route path="cefr" element={<CEFRSetting />} />
                   <Route path="words" element={<FavWords />} />
                   <Route path="cefr" element={<CEFRSetting />} />
                   <Route path="playground" element={<Playgound />} />

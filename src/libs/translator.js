@@ -24,12 +24,13 @@ import {
   genEventName,
   truncateWords,
   escapeHTML,
+  parseAITerms,
 } from "./utils";
 import { apiTranslate } from "../apis";
 import { kissLog } from "./log";
 import { clearAllBatchQueue } from "./batchQueue";
 import { genTextClass } from "./style";
-import { createLoadingSVG } from "./svg";
+import { createLoadingSVG, createRetrySVG } from "./svg";
 import { shortcutRegister } from "./shortcut";
 import { tryDetectLang } from "./detect";
 import { trustedTypesHelper } from "./trustedTypes";
@@ -171,6 +172,7 @@ export class Translator {
     term: `${APP_LCNAME}-term`,
     br: `${APP_LCNAME}-br`,
     highlight: `${APP_LCNAME}-highlight`,
+    retry: `${APP_LCNAME}-retry`,
   };
 
   // 内置跳过翻译文本
@@ -286,7 +288,7 @@ export class Translator {
   static BUILTIN_IGNORE_SELECTOR = `address, area, audio, br, canvas, 
   data, datalist, embed, head, iframe, input, noscript, map, 
   object, option, param, picture, progress, 
-  select, script, style, track, textarea, template, 
+  select, script, style, svg, track, textarea, template, 
   video, wbr, .notranslate, [contenteditable='true'], [translate='no']`;
 
   #setting; // 设置选项
@@ -430,7 +432,8 @@ export class Translator {
     );
 
     this.#parseTerms(this.#rule.terms);
-    this.#parseAITerms(this.#rule.aiTerms);
+    // this.#parseAITerms(this.#rule.aiTerms);
+    this.#glossary = parseAITerms(this.#rule.aiTerms);
     this.#createTextStyles();
 
     this.#boundMouseMoveHandler = this.#handleMouseMove.bind(this);
@@ -588,35 +591,35 @@ export class Translator {
     }
   }
 
-  #parseAITerms(termsString) {
-    if (!termsString || typeof termsString !== "string") return;
+  // #parseAITerms(termsString) {
+  //   if (!termsString || typeof termsString !== "string") return;
 
-    try {
-      this.#glossary = Object.fromEntries(
-        termsString
-          .split(/\n|;/)
-          .map((line) => {
-            const [k = "", v = ""] = line.split(",").map((s) => s.trim());
-            return [k, v];
-          })
-          .filter(([k]) => k)
-      );
-    } catch (err) {
-      kissLog("parse aiterms", err);
-    }
-  }
+  //   try {
+  //     this.#glossary = Object.fromEntries(
+  //       termsString
+  //         .split(/\n|;/)
+  //         .map((line) => {
+  //           const [k = "", v = ""] = line.split(",").map((s) => s.trim());
+  //           return [k, v];
+  //         })
+  //         .filter(([k]) => k)
+  //     );
+  //   } catch (err) {
+  //     kissLog("parse aiterms", err);
+  //   }
+  // }
 
-  // todo: 利用AI总结
-  #getDocDescription() {
-    try {
-      const meta = document.querySelector('meta[name="description"]');
-      const description = meta?.getAttribute("content") || "";
-      return truncateWords(description);
-    } catch (err) {
-      kissLog("get description", err);
-    }
-    return "";
-  }
+  // // todo: 利用AI总结
+  // #getDocDescription() {
+  //   try {
+  //     const meta = document.querySelector('meta[name="description"]');
+  //     const description = meta?.getAttribute("content") || "";
+  //     return truncateWords(description);
+  //   } catch (err) {
+  //     kissLog("get description", err);
+  //   }
+  //   return "";
+  // }
 
   // 监控翻译单元的可见性
   #createIntersectionObserver() {
@@ -1298,8 +1301,17 @@ export class Translator {
       nodes[nodes.length - 1].after(wrapper);
 
       const currentRunId = this.#runId;
-      const { trText: translatedText, isSame: isSameLang } =
-        await this.#translateFetch(processedString, deLang);
+      const { trText, isSame } = await this.#translateFetch(
+        processedString,
+        deLang
+      );
+      let translatedText = trText;
+      const isSameLang = isSame;
+      translatedText = await maybeAnnotateTranslatedText({
+        translatedText,
+        targetLang: toLang,
+        cefrSetting: this.#setting.cefrSetting,
+      });
       if (this.#runId !== currentRunId) {
         throw new Error("Request terminated");
       }
@@ -1376,10 +1388,39 @@ export class Translator {
         }
       }
     } catch (err) {
-      // inner.textContent = `[失败]...`;
-      // todo: 失败重试按钮
       kissLog("translate group error: ", err.message);
-      this.#cleanupDirectTranslations(hostNode);
+      if (err.message === "Request terminated") {
+        this.#cleanupDirectTranslations(hostNode);
+        return;
+      }
+
+      // 失败重试按钮
+      try {
+        const wrapper = hostNode.querySelector(
+          `:scope > .${Translator.KISS_CLASS.warpper}:last-of-type`
+        );
+        if (wrapper) {
+          const inner = wrapper.querySelector(
+            `.${Translator.KISS_CLASS.inner}`
+          );
+          if (inner) {
+            inner.textContent = "";
+            const retryIcon = createRetrySVG();
+            retryIcon.classList.add(Translator.KISS_CLASS.retry);
+            retryIcon.addEventListener("click", (e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              wrapper.remove();
+              this.#processedNodes.delete(hostNode);
+              this.#translateNodeGroup(nodes, hostNode, deLang);
+            });
+            inner.appendChild(retryIcon);
+          }
+        }
+      } catch (retryErr) {
+        kissLog("retry icon error: ", retryErr.message);
+        this.#cleanupDirectTranslations(hostNode);
+      }
     }
   }
 
@@ -1699,11 +1740,7 @@ export class Translator {
         if (br) br.hidden = false;
         this.#restoreOriginal(el, nodes);
         this.#translationNodes.set(el, { nodes, isHide: false, sourceLang });
-        void this.#annotateOriginalNodeGroupWithCEFR(
-          nodes,
-          sourceLang,
-          false
-        );
+        void this.#annotateOriginalNodeGroupWithCEFR(nodes, sourceLang, false);
       }
     });
   }

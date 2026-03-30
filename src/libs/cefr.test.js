@@ -133,7 +133,9 @@ describe("cefr helpers", () => {
       expect(node.querySelector("rt")).toBeNull();
     });
 
-    const styleTag = document.head.querySelector('style[data-kiss-cefr-style="1"]');
+    const styleTag = document.head.querySelector(
+      'style[data-kiss-cefr-style="1"]'
+    );
     expect(styleTag).toBeTruthy();
     expect(styleTag.textContent).toContain("position: absolute;");
     expect(styleTag.textContent).toContain("display: inline;");
@@ -176,7 +178,9 @@ describe("cefr helpers", () => {
   test("reports inserted annotation nodes so mutation observers can ignore internal CEFR updates", async () => {
     const { annotateNodeGroupWithCEFR } = await import("./cefr");
     const host = document.createElement("div");
-    const textNode = document.createTextNode("Community support can mitigate risk.");
+    const textNode = document.createTextNode(
+      "Community support can mitigate risk."
+    );
     host.appendChild(textNode);
     const insertedNodes = [];
 

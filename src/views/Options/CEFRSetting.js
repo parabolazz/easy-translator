@@ -213,7 +213,9 @@ export default function CEFRSetting() {
                 {CEFR_LEVEL_OPTIONS.map(({ level }) => (
                   <Button
                     key={level}
-                    variant={cefrSetting.level === level ? "contained" : "outlined"}
+                    variant={
+                      cefrSetting.level === level ? "contained" : "outlined"
+                    }
                     onClick={() => persistCEFRLevel(level, "manual")}
                   >
                     {getCEFRLabel(level, i18n)}
