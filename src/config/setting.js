@@ -156,6 +156,11 @@ export const DEFAULT_MOUSE_HOVER_SETTING = {
   mouseHoverKey: DEFAULT_MOUSEHOVER_KEY, // 鼠标悬停翻译组合键
 };
 
+export const DEFAULT_CEFR_SETTING = {
+  enabled: false,
+  level: 0,
+};
+
 export const DEFAULT_SETTING = {
   darkMode: "auto", // 深色模式
   uiLang: "en", // 界面语言
@@ -198,4 +203,5 @@ export const DEFAULT_SETTING = {
   logLevel: LogLevel.INFO.value, // 日志级别
   rootMargin: 500, // 提前触发翻译
   customStyles: DEFAULT_CUSTOM_STYLES, // 自定义样式列表
+  cefrSetting: DEFAULT_CEFR_SETTING, // CEFR 词汇学习
 };

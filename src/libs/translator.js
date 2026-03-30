@@ -38,6 +38,7 @@ import { injectInternalCss } from "./injector";
 import { isExt } from "./client";
 import { sendBgMsg } from "./msg";
 import { getDocInfo } from "./docInfo";
+import { maybeAnnotateTranslatedText } from "./cefr";
 
 /**
  * @class Translator
@@ -1297,8 +1298,14 @@ export class Translator {
       nodes[nodes.length - 1].after(wrapper);
 
       const currentRunId = this.#runId;
-      const { trText: translatedText, isSame: isSameLang } =
-        await this.#translateFetch(processedString, deLang);
+      const { trText, isSame } = await this.#translateFetch(processedString, deLang);
+      let translatedText = trText;
+      const isSameLang = isSame;
+      translatedText = await maybeAnnotateTranslatedText({
+        translatedText,
+        targetLang: toLang,
+        cefrSetting: this.#setting.cefrSetting,
+      });
       if (this.#runId !== currentRunId) {
         throw new Error("Request terminated");
       }
