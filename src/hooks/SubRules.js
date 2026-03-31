@@ -2,7 +2,7 @@ import { DEFAULT_SUBRULES_LIST } from "../config";
 import { useSetting } from "./Setting";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { loadOrFetchSubRules } from "../libs/subRules";
-import { kissLog } from "../libs/log";
+import { easyLog } from "../libs/log";
 
 /**
  * 订阅规则
@@ -58,7 +58,7 @@ export function useSubRules() {
           const rules = await loadOrFetchSubRules(selectedUrl);
           setSelectedRules(rules);
         } catch (err) {
-          kissLog("loadOrFetchSubRules", err);
+          easyLog("loadOrFetchSubRules", err);
         } finally {
           setLoading(false);
         }

@@ -33,7 +33,8 @@ export const DEFAULT_CSPLIST = []; // 禁用CSP名单
 export const DEFAULT_ORILIST = ["https://dict.youdao.com"]; // 移除Origin名单
 
 // 同步设置
-export const OPT_SYNCTYPE_WORKER = "KISS-Worker";
+export const LEGACY_OPT_SYNCTYPE_WORKER = "KISS-Worker";
+export const OPT_SYNCTYPE_WORKER = "Easy-Worker";
 export const OPT_SYNCTYPE_WEBDAV = "WebDAV";
 export const OPT_SYNCTOKEN_PERFIX = "kt_";
 export const OPT_SYNCTYPE_ALL = [OPT_SYNCTYPE_WORKER, OPT_SYNCTYPE_WEBDAV];
@@ -268,5 +269,20 @@ export const normalizeSetting = (setting) => {
       transApis
     ),
     cefrSetting: normalizeCEFRSetting(baseSetting.cefrSetting),
+  };
+};
+
+export const normalizeSync = (sync) => {
+  const baseSync = isObject(sync) ? sync : {};
+  const syncType =
+    baseSync.syncType === LEGACY_OPT_SYNCTYPE_WORKER
+      ? OPT_SYNCTYPE_WORKER
+      : baseSync.syncType;
+  return {
+    ...DEFAULT_SYNC,
+    ...baseSync,
+    syncType: OPT_SYNCTYPE_ALL.includes(syncType)
+      ? syncType
+      : DEFAULT_SYNC.syncType,
   };
 };

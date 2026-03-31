@@ -53,7 +53,7 @@ A simple, open source [bilingual translation extension & Greasemonkey script](ht
   - [x] Custom AI terminology dictionary
   - [x] All APIs support hooks and custom parameters for advanced usage
 - [x] Cross-client data synchronization
-  - [x] KISS-Worker（cloudflare/docker）
+  - [x] Easy-Worker（cloudflare/docker）
   - [x] WebDAV
 - [x] Custom translation rules
   - [x] Rule subscription/rule sharing
@@ -90,11 +90,11 @@ A simple, open source [bilingual translation extension & Greasemonkey script](ht
 
 ## Associated Projects
 
-- Data synchronization service: [https://github.com/fishjar/kiss-worker](https://github.com/fishjar/kiss-worker)
+- Data synchronization service: [Easy-Worker](https://github.com/fishjar/kiss-worker)
   - Data synchronization service available for this project.
   - Can also be used to share personal private rule lists.
   - Deploy by yourself, manage by yourself, data is private.
-- Community subscription rules: [https://github.com/fishjar/kiss-rules](https://github.com/fishjar/kiss-rules)
+- Community subscription rules: [Easy Rules](https://github.com/fishjar/kiss-rules)
   - Provides the latest and most complete list of subscription rules maintained by the community.
   - Help with rules-related issues.
 
@@ -174,7 +174,7 @@ pnpm build
 // `toggle_transbox`    Open/close translation popup
 // `toggle_hover_node`  Translate hovered paragraph
 // `input_translate`    Translate input box
-window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "toggle_translate" }}));
+window.dispatchEvent(new CustomEvent("easy_translator", {detail: { action: "toggle_translate" }}));
 ```
 
 ## Discussion

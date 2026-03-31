@@ -235,7 +235,7 @@ export const sha256 = async (text, salt) => {
  * 生成随机事件名称
  * @returns
  */
-export const genEventName = () => `kiss-${btoa(Math.random()).slice(3, 11)}`;
+export const genEventName = () => `easy-${btoa(Math.random()).slice(3, 11)}`;
 
 /**
  * 判断两个 Set 是否相同
@@ -488,7 +488,7 @@ function getMimeTypeFromFilename(filename) {
  * @param {*} str
  * @param {*} filename
  */
-export function downloadBlobFile(str, filename = "kiss-file.txt") {
+export function downloadBlobFile(str, filename = "easy-file.txt") {
   const mimeType = getMimeTypeFromFilename(filename);
   const blob = new Blob([str], { type: mimeType });
   const url = URL.createObjectURL(blob);
@@ -496,7 +496,7 @@ export function downloadBlobFile(str, filename = "kiss-file.txt") {
   const a = document.createElement("a");
   a.style.display = "none";
   a.href = url;
-  a.download = filename || `kiss-file.txt`;
+  a.download = filename || `easy-file.txt`;
 
   document.body.appendChild(a);
   a.click();

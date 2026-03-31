@@ -30,7 +30,7 @@ import { useShortcut } from "../../hooks/Shortcut";
 import ShortcutInput from "./ShortcutInput";
 import { useFab } from "../../hooks/Fab";
 import { sendBgMsg } from "../../libs/msg";
-import { kissLog, LogLevel } from "../../libs/log";
+import { easyLog, LogLevel } from "../../libs/log";
 import UploadButton from "./UploadButton";
 import DownloadButton from "./DownloadButton";
 import ValidationInput from "../../hooks/ValidationInput";
@@ -73,7 +73,7 @@ export default function Settings() {
       caches.delete(CACHE_NAME);
       alert.success(i18n("clear_success"));
     } catch (err) {
-      kissLog("clear cache", err);
+      easyLog("clear cache", err);
     }
   };
 
@@ -81,7 +81,7 @@ export default function Settings() {
     try {
       updateSetting(JSON.parse(data));
     } catch (err) {
-      kissLog("import setting", err);
+      easyLog("import setting", err);
     }
   };
 
@@ -124,7 +124,7 @@ export default function Settings() {
           <DownloadButton
             handleData={() => JSON.stringify(setting, null, 2)}
             text={i18n("export")}
-            fileName={`kiss-setting_v2_${Date.now()}.json`}
+            fileName={`easy-setting_v2_${Date.now()}.json`}
           />
         </Stack>
 

@@ -11,11 +11,11 @@ export const CEFR_LEVEL_SCORES = {
   C2: 6,
 };
 
-export const CEFR_WORD_CLASS = "kiss-cefr-word";
-export const CEFR_GLOSS_CLASS = "kiss-cefr-gloss";
-export const CEFR_ATTR = "data-kiss-cefr";
+export const CEFR_WORD_CLASS = "easy-cefr-word";
+export const CEFR_GLOSS_CLASS = "easy-cefr-gloss";
+export const CEFR_ATTR = "data-easy-cefr";
 export const CEFR_WORD_ATTR = "data-word";
-export const CEFR_STYLE_ATTR = "data-kiss-cefr-style";
+export const CEFR_STYLE_ATTR = "data-easy-cefr-style";
 
 const WORD_REGEX = /\b([a-zA-Z]+)\b/g;
 const CEFR_SELECTOR = `span.${CEFR_WORD_CLASS}[${CEFR_ATTR}="1"]`;

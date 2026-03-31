@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import useWindowSize from "../../hooks/WindowSize";
 import {
-  EVENT_KISS_INNER,
+  EVENT_EASY_INNER,
   MSG_OPEN_OPTIONS,
   MSG_POPUP_TOGGLE,
 } from "../../config";
@@ -51,9 +51,9 @@ export default function Action({ translator, processActions }) {
       }
     };
 
-    document.addEventListener(EVENT_KISS_INNER, handleStatusUpdate);
+    document.addEventListener(EVENT_EASY_INNER, handleStatusUpdate);
     return () => {
-      document.removeEventListener(EVENT_KISS_INNER, handleStatusUpdate);
+      document.removeEventListener(EVENT_EASY_INNER, handleStatusUpdate);
     };
   }, []);
 

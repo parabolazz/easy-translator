@@ -38,11 +38,11 @@ export class YouTubeSubtitleList {
 
     // --- 事件绑定 ---
     this.handleWordAdded = this.handleWordAdded.bind(this);
-    document.addEventListener("kiss-add-word", this.handleWordAdded);
+    document.addEventListener("easy-add-word", this.handleWordAdded);
 
     // 监听来自外部（如选项页面）的跳转指令
     window.addEventListener("message", (event) => {
-      if (event.data && event.data.type === "KISS_TRANSLATOR_JUMP_TO_TIME") {
+      if (event.data && event.data.type === "EASY_TRANSLATOR_JUMP_TO_TIME") {
         this.jumpToTime(event.data.time);
       }
     });
@@ -86,7 +86,7 @@ export class YouTubeSubtitleList {
    */
   destroy() {
     this.turnOffAutoSub();
-    document.removeEventListener("kiss-add-word", this.handleWordAdded);
+    document.removeEventListener("easy-add-word", this.handleWordAdded);
     if (this.container) {
       this.container.remove();
       this.container = null;
@@ -176,7 +176,7 @@ export class YouTubeSubtitleList {
 
       downloadBlobFile(
         vttContent,
-        `kiss-subtitles-${videoId}_${Date.now()}.vtt`
+        `easy-subtitles-${videoId}_${Date.now()}.vtt`
       );
     } catch (error) {
       logger.error("Youtube Provider: download subtitles error:", error);
@@ -224,11 +224,11 @@ export class YouTubeSubtitleList {
    */
   _ensureContainer() {
     this.container = document.getElementById(
-      "kiss-youtube-subtitle-list-container"
+      "easy-youtube-subtitle-list-container"
     );
     if (!this.container) {
       this.container = document.createElement("div");
-      this.container.id = "kiss-youtube-subtitle-list-container";
+      this.container.id = "easy-youtube-subtitle-list-container";
       this.container.className = "notranslate";
       Object.assign(this.container.style, {
         height: "calc(100vh - 220px)",
@@ -366,7 +366,7 @@ export class YouTubeSubtitleList {
 
     // 1. Subtitle Panel
     this.subtitleListEl = document.createElement("div");
-    this.subtitleListEl.id = "kiss-youtube-subtitle-list";
+    this.subtitleListEl.id = "easy-youtube-subtitle-list";
     // 【修改点 2】Subtitle Panel 改为 Flex Column 布局，高度 100%
     this.subtitleListEl.style.cssText = `display: flex; flex-direction: column; height: 100%; overflow: hidden;`;
 
@@ -415,7 +415,7 @@ export class YouTubeSubtitleList {
 
     // 2. Vocabulary Panel (保持不变，它本来就是 Flex 结构)
     this.vocabularyListEl = document.createElement("div");
-    this.vocabularyListEl.id = "kiss-youtube-vocabulary-list";
+    this.vocabularyListEl.id = "easy-youtube-vocabulary-list";
     this.vocabularyListEl.style.cssText = `display: none; flex-direction: column; height: 100%; overflow: hidden;`;
 
     // --- Tab Switching Logic ---
@@ -449,8 +449,8 @@ export class YouTubeSubtitleList {
    */
   _createSubtitleListItem(sub, index) {
     const li = document.createElement("li");
-    li.id = `kiss-youtube-item-${index}`;
-    li.className = "kiss-youtube-item";
+    li.id = `easy-youtube-item-${index}`;
+    li.className = "easy-youtube-item";
     li.dataset.time = sub.start;
     li.style.cssText = `cursor: pointer; padding: 12px 16px; border-bottom: 1px solid var(--kt-divider); transition: all 0.2s ease; border-radius: 6px; margin-bottom: 4px; display: flex; align-items: flex-start;`;
 
@@ -465,13 +465,13 @@ export class YouTubeSubtitleList {
 
     // 原文
     const textSpan = document.createElement("div");
-    textSpan.className = "kiss-youtube-original";
+    textSpan.className = "easy-youtube-original";
     textSpan.textContent = sub.text || "";
     textSpan.style.cssText = `color: var(--kt-text); font-size: 14px; line-height: 1.4; margin-bottom: 4px;`;
 
     // 译文
     const translationEl = document.createElement("div");
-    translationEl.className = "kiss-youtube-translation";
+    translationEl.className = "easy-youtube-translation";
     translationEl.textContent = sub.translation || "";
     translationEl.style.display = sub.translation ? "block" : "none";
     translationEl.style.cssText = `color: var(--kt-subtext); font-size: 13px; line-height: 1.4; font-style: italic; min-height: 18px;`;
@@ -532,10 +532,10 @@ export class YouTubeSubtitleList {
         if (timeSpan)
           timeSpan.textContent = `${this.millisToMinutesAndSeconds(sub.start)} `;
         // 更新原文
-        const textSpan = item.querySelector(".kiss-youtube-original");
+        const textSpan = item.querySelector(".easy-youtube-original");
         if (textSpan) textSpan.textContent = sub.text || "";
         // 更新译文
-        const translationEl = item.querySelector(".kiss-youtube-translation");
+        const translationEl = item.querySelector(".easy-youtube-translation");
         if (translationEl) {
           translationEl.textContent = sub.translation || "";
           translationEl.style.display = sub.translation ? "block" : "none";
@@ -955,7 +955,7 @@ export class YouTubeSubtitleList {
     const blob = new Blob([content], { type: mimeType });
     downloadBlobFile(
       blob,
-      `kiss-vocabulary-${new Date().toISOString().slice(0, 10)}.${extension}`
+      `easy-vocabulary-${new Date().toISOString().slice(0, 10)}.${extension}`
     );
   }
 

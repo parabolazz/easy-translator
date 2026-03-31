@@ -26,7 +26,7 @@ class Logger {
   constructor(options = {}) {
     this.config = {
       level: options.level || LogLevel.INFO,
-      prefix: options.prefix || "KISS-Translator",
+      prefix: options.prefix || "Easy-Translator",
     };
   }
 
@@ -158,6 +158,6 @@ class Logger {
 }
 
 export const logger = new Logger();
-export const kissLog = logger.info.bind(logger);
+export const easyLog = logger.info.bind(logger);
 
 // todo：debug日志埋点

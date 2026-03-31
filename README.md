@@ -53,7 +53,7 @@
   - [x] 自定义AI术语词典
   - [x] 所有接口均支持Hook和自定义参数等高级功能
 - [x] 跨客户端数据同步
-  - [x] KISS-Worker（cloudflare/docker）
+  - [x] Easy-Worker（cloudflare/docker）
   - [x] WebDAV
 - [x] 自定义翻译规则
   - [x] 规则订阅/规则分享
@@ -90,11 +90,11 @@
 
 ## 关联项目
 
-- 数据同步服务: [https://github.com/fishjar/kiss-worker](https://github.com/fishjar/kiss-worker)
+- 数据同步服务: [Easy-Worker](https://github.com/fishjar/kiss-worker)
   - 可用于本项目的数据同步服务。
   - 亦可用于分享个人的私有规则列表。
   - 自己部署，自己管理，数据私有。
-- 社区订阅规则: [https://github.com/fishjar/kiss-rules](https://github.com/fishjar/kiss-rules)
+- 社区订阅规则: [Easy Rules](https://github.com/fishjar/kiss-rules)
   - 提供社区维护的，最新最全的订阅规则列表。
   - 求助规则相关的问题。
 
@@ -174,7 +174,7 @@ pnpm build
 // `toggle_transbox`    打开/关闭翻译弹窗
 // `toggle_hover_node`  翻译鼠标悬停段落
 // `input_translate`    翻译输入框
-window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "toggle_translate" }}));
+window.dispatchEvent(new CustomEvent("easy_translator", {detail: { action: "toggle_translate" }}));
 ```
 
 ## 交流

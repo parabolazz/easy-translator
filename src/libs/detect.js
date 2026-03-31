@@ -16,7 +16,7 @@ import {
   apiTencentLangdetect,
   apiBuiltinAIDetect,
 } from "../apis";
-import { kissLog } from "./log";
+import { easyLog } from "./log";
 
 const langdetectFns = {
   [OPT_TRANS_GOOGLE]: apiGoogleLangdetect,
@@ -42,7 +42,7 @@ export const tryDetectLang = async (text, langDetector = "-") => {
         deLang = OPT_LANGS_TO_CODE[langDetector].get(lang) || "";
       }
     } catch (err) {
-      kissLog("detect lang remote", err);
+      easyLog("detect lang remote", err);
     }
   }
 
@@ -57,7 +57,7 @@ export const tryDetectLang = async (text, langDetector = "-") => {
         deLang = "zh-CN";
       }
     } catch (err) {
-      kissLog("detect lang local", err);
+      easyLog("detect lang local", err);
     }
   }
 

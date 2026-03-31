@@ -105,16 +105,16 @@ CEFR 标注作为“翻译成功后的增强步骤”插入到该流程之后，
 每个被标注的单词应渲染为：
 
 ```html
-<span class="kiss-cefr-word" data-kiss-cefr="1" data-word="ubiquitous">
+<span class="easy-cefr-word" data-easy-cefr="1" data-word="ubiquitous">
   ubiquitous
-  <span class="kiss-cefr-gloss" aria-hidden="true">普遍的</span>
+  <span class="easy-cefr-gloss" aria-hidden="true">普遍的</span>
 </span>
 ```
 
 关键样式要求：
 
-- `kiss-cefr-word` 使用 `position: relative` 和 `display: inline-block`
-- `kiss-cefr-gloss` 使用 `position: absolute`，定位在单词上方
+- `easy-cefr-word` 使用 `position: relative` 和 `display: inline-block`
+- `easy-cefr-gloss` 使用 `position: absolute`，定位在单词上方
 - 释义层使用 `pointer-events: none`
 - 释义层使用 `white-space: nowrap`
 - 释义层有小幅偏移和适度 `z-index`，保证可读但不过度遮挡周边内容

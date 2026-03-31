@@ -5,8 +5,8 @@ import { TransboxManager } from "./tranbox";
 import { shortcutRegister } from "./shortcut";
 import { sendIframeMsg } from "./iframe";
 import {
-  EVENT_KISS_INNER,
-  EVENT_KISS_TRANSLATOR,
+  EVENT_EASY_INNER,
+  EVENT_EASY_TRANSLATOR,
   MSG_HOVERNODE_TOGGLE,
   MSG_INPUT_TRANSLATE,
   newI18n,
@@ -106,7 +106,7 @@ export default class TranslatorManager {
 
     // 移除消息监听器
     window.removeEventListener(
-      EVENT_KISS_TRANSLATOR,
+      EVENT_EASY_TRANSLATOR,
       this.#innerMessageHandler
     );
     if (this.#isUserscript) {
@@ -154,7 +154,7 @@ export default class TranslatorManager {
     }
 
     // 监听外部调用消息
-    window.addEventListener(EVENT_KISS_TRANSLATOR, this.#windowMessageHandler);
+    window.addEventListener(EVENT_EASY_TRANSLATOR, this.#windowMessageHandler);
   }
 
   #setupTouchOperations() {
@@ -288,7 +288,7 @@ export default class TranslatorManager {
         break;
       case MSG_OPEN_TRANBOX:
         document.dispatchEvent(
-          new CustomEvent(EVENT_KISS_INNER, {
+          new CustomEvent(EVENT_EASY_INNER, {
             detail: { action: MSG_OPEN_TRANBOX },
           })
         );

@@ -10,7 +10,7 @@ import {
   GLOBLA_RULE,
   OPT_LANGS_FROM,
   OPT_LANGS_TO,
-  URL_KISS_RULES_NEW_ISSUE,
+  URL_EASY_RULES_NEW_ISSUE,
   OPT_SYNCTYPE_WORKER,
   DEFAULT_TRANS_TAG,
   OPT_SPLIT_PARAGRAPH_DISABLE,
@@ -56,7 +56,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SaveIcon from "@mui/icons-material/Save";
 import ValidationInput from "../../hooks/ValidationInput";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import { useApiList } from "../../hooks/Api";
 import ShowMoreButton from "./ShowMoreButton";
 import { useConfirm } from "../../hooks/Confirm";
@@ -832,7 +832,7 @@ function ShareButton({ rules, injectRules, selectedUrl }) {
       window.open(url, "_blank");
     } catch (err) {
       alert.warning(i18n("error_got_some_wrong"));
-      kissLog("share rules", err);
+      easyLog("share rules", err);
     }
   };
 
@@ -862,7 +862,7 @@ function UserRules({ subRules, rules }) {
     try {
       await rules.merge(JSON.parse(data));
     } catch (err) {
-      kissLog("import rules", err);
+      easyLog("import rules", err);
     }
   };
 
@@ -918,7 +918,7 @@ function UserRules({ subRules, rules }) {
         <DownloadButton
           handleData={() => JSON.stringify([...rules.list], null, 2)}
           text={i18n("export")}
-          fileName={`kiss-rules_v2_${Date.now()}.json`}
+          fileName={`easy-rules_v2_${Date.now()}.json`}
         />
 
         <ShareButton
@@ -936,7 +936,7 @@ function UserRules({ subRules, rules }) {
           {i18n("clear_all")}
         </Button>
 
-        <HelpButton url={URL_KISS_RULES_NEW_ISSUE} />
+        <HelpButton url={URL_EASY_RULES_NEW_ISSUE} />
 
         <FormControlLabel
           control={
@@ -1005,7 +1005,7 @@ function SubRulesItem({
       await delSubRules(url);
       await deleteDataCache(url);
     } catch (err) {
-      kissLog("del subrules", err);
+      easyLog("del subrules", err);
     }
   };
 
@@ -1018,7 +1018,7 @@ function SubRulesItem({
       }
       await updateDataCache(url);
     } catch (err) {
-      kissLog("sync sub rules", err);
+      easyLog("sync sub rules", err);
       alert.error(
         <>
           <p>Sync Error:</p>
@@ -1103,7 +1103,7 @@ function SubRulesEdit({ subList, addSub, updateDataCache }) {
       setShowInput(false);
       setInputText("");
     } catch (err) {
-      kissLog("fetch rules", err);
+      easyLog("fetch rules", err);
       setInputError(i18n("error_fetch_url"));
     } finally {
       setLoading(false);
@@ -1135,7 +1135,7 @@ function SubRulesEdit({ subList, addSub, updateDataCache }) {
         >
           {i18n("add")}
         </Button>
-        <HelpButton url={URL_KISS_RULES_NEW_ISSUE} />
+        <HelpButton url={URL_EASY_RULES_NEW_ISSUE} />
       </Stack>
 
       {showInput && (

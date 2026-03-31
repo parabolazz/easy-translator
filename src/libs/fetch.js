@@ -3,7 +3,7 @@ import { sendBgMsg } from "./msg";
 import { getSettingWithDefault } from "./storage";
 import { MSG_FETCH, DEFAULT_HTTP_TIMEOUT, PORT_STREAM_FETCH } from "../config";
 import { isBg } from "./browser";
-import { kissLog } from "./log";
+import { easyLog } from "./log";
 import { getFetchPool } from "./pool";
 import { getHttpCachePolyfill, parseResponse } from "./cache";
 import { createSSEParser, createAsyncQueue } from "./stream";
@@ -65,7 +65,7 @@ export const fetchPatcher = async (input, init = {}, opts) => {
     try {
       timeout = (await getSettingWithDefault()).httpTimeout;
     } catch (err) {
-      kissLog("getSettingWithDefault", err);
+      easyLog("getSettingWithDefault", err);
     }
   }
   if (!timeout) {
@@ -76,8 +76,8 @@ export const fetchPatcher = async (input, init = {}, opts) => {
     // todo: 自定义接口 init 可能包含了 signal
     Object.assign(init, { timeout });
 
-    const { body, headers, status, statusText } = window.KISS_GM
-      ? await window.KISS_GM.fetch(input, init)
+    const { body, headers, status, statusText } = window.EASY_GM
+      ? await window.EASY_GM.fetch(input, init)
       : await fetchGM(input, init);
 
     return new Response(body, {
@@ -166,7 +166,7 @@ async function* fetchStreamGM(
   const asyncQueue = createAsyncQueue();
   const parseSSE = createSSEParser();
 
-  const gmRequest = window.KISS_GM?.xmlHttpRequest || GM.xmlHttpRequest;
+  const gmRequest = window.EASY_GM?.xmlHttpRequest || GM.xmlHttpRequest;
   const requestHandle = gmRequest({
     method,
     url: input,

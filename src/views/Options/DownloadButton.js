@@ -1,7 +1,7 @@
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useState } from "react";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import { downloadBlobFile } from "../../libs/utils";
 
 export default function DownloadButton({ handleData, text, fileName }) {
@@ -13,7 +13,7 @@ export default function DownloadButton({ handleData, text, fileName }) {
       const data = await handleData();
       downloadBlobFile(data, fileName);
     } catch (err) {
-      kissLog("download", err);
+      easyLog("download", err);
     } finally {
       setLoading(false);
     }

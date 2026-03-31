@@ -53,7 +53,7 @@
   - [x] カスタムAI用語集
   - [x] すべてのインターフェースがフックやカスタムパラメータなどの高度な機能をサポート
 - [x] クライアント間のデータ同期
-  - [x] KISS-Worker（cloudflare/docker）
+  - [x] Easy-Worker（cloudflare/docker）
   - [x] WebDAV
 - [x] カスタム翻訳ルール
   - [x] ルールの購読/ルール共有
@@ -90,11 +90,11 @@
 
 ## 関連プロジェクト
 
-- データ同期サービス: [https://github.com/fishjar/kiss-worker](https://github.com/fishjar/kiss-worker)
+- データ同期サービス: [Easy-Worker](https://github.com/fishjar/kiss-worker)
   - 本プロジェクトのデータ同期サービスとして使用できます。
   - 個人のプライベートなルールリストの共有にも使用できます。
   - セルフホスト、セルフマネジメント、データはプライベート。
-- コミュニティ購読ルール: [https://github.com/fishjar/kiss-rules](https://github.com/fishjar/kiss-rules)
+- コミュニティ購読ルール: [Easy Rules](https://github.com/fishjar/kiss-rules)
   - コミュニティによってメンテナンスされた、最新かつ最も完全な購読ルールリストを提供します。
   - ルール関連の問題についての助けを求める。
 
@@ -174,7 +174,7 @@ pnpm build
 // `toggle_transbox`    翻訳ポップアップを開く／閉じる
 // `toggle_hover_node`  マウスオーバー中の段落を翻訳
 // `input_translate`    入力欄を翻訳
-window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "toggle_translate" }}));
+window.dispatchEvent(new CustomEvent("easy_translator", {detail: { action: "toggle_translate" }}));
 ```
 
 ## コミュニケーション

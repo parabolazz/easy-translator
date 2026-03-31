@@ -8,7 +8,7 @@ import { useI18n } from "../../hooks/I18n";
 import Divider from "@mui/material/Divider";
 import Header from "./Header";
 import { MSG_OPEN_SEPARATE_WINDOW, MSG_TRANS_GETRULE } from "../../config";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import PopupCont from "./PopupCont";
 import TranForm from "../Selection/TranForm";
 import { useSetting } from "../../hooks/Setting";
@@ -73,7 +73,7 @@ export default function Popup() {
           setSetting(res.setting);
         }
       } catch (err) {
-        kissLog("query rule", err);
+        easyLog("query rule", err);
       }
     })();
   }, []);

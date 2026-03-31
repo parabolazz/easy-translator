@@ -7,7 +7,7 @@ export const injectInlineJs = (code, id = "easy-translator-inline-js") => {
   }
 
   const el = document.createElement("script");
-  el.setAttribute("data-source", "kiss-inject injectInlineJs");
+  el.setAttribute("data-source", "easy-inject injectInlineJs");
   el.type = "text/javascript";
   el.id = id;
   el.textContent = trustedTypesHelper.createScript(code);
@@ -20,7 +20,7 @@ export const injectInlineJsBg = (code, id = "easy-translator-inline-js") => {
   }
 
   const el = document.createElement("script");
-  el.setAttribute("data-source", "kiss-inject injectInlineJsBg");
+  el.setAttribute("data-source", "easy-inject injectInlineJsBg");
   el.type = "text/javascript";
   el.id = id;
   el.textContent = code;
@@ -34,7 +34,7 @@ export const injectExternalJs = (src, id = "easy-translator-external-js") => {
   }
 
   const el = document.createElement("script");
-  el.setAttribute("data-source", "kiss-inject injectExternalJs");
+  el.setAttribute("data-source", "easy-inject injectExternalJs");
   el.type = "text/javascript";
   el.id = id;
   el.src = trustedTypesHelper.createScriptURL(src);
@@ -44,7 +44,7 @@ export const injectExternalJs = (src, id = "easy-translator-external-js") => {
 // Function to inject internal CSS code
 export const injectInternalCss = (styles) => {
   const el = document.createElement("style");
-  el.setAttribute("data-source", "kiss-inject injectInternalCss");
+  el.setAttribute("data-source", "easy-inject injectInternalCss");
   el.textContent = styles;
   document.head?.appendChild(el);
 };
@@ -52,7 +52,7 @@ export const injectInternalCss = (styles) => {
 // Function to inject external CSS file
 export const injectExternalCss = (href) => {
   const el = document.createElement("link");
-  el.setAttribute("data-source", "kiss-inject injectExternalCss");
+  el.setAttribute("data-source", "easy-inject injectExternalCss");
   el.setAttribute("rel", "stylesheet");
   el.setAttribute("type", "text/css");
   el.setAttribute("href", href);

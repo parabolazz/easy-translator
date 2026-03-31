@@ -53,7 +53,7 @@
   - [x] 사용자 정의 AI 용어 사전
   - [x] 모든 인터페이스는 후크 및 사용자 정의 파라미터 등 고급 기능 지원
 - [x] 클라이언트 간 데이터 동기화
-  - [x] KISS-Worker (cloudflare/docker)
+  - [x] Easy-Worker (cloudflare/docker)
   - [x] WebDAV
 - [x] 사용자 정의 번역 규칙
   - [x] 규칙 구독 / 규칙 공유
@@ -90,11 +90,11 @@
 
 ## 관련 프로젝트
 
-- 데이터 동기화 서비스: [https://github.com/fishjar/kiss-worker](https://github.com/fishjar/kiss-worker)
+- 데이터 동기화 서비스: [Easy-Worker](https://github.com/fishjar/kiss-worker)
   - 본 프로젝트의 데이터 동기화 서비스로 사용할 수 있습니다.
   - 개인의 비공개 규칙 목록을 공유하는 데에도 사용할 수 있습니다.
   - 직접 배포, 직접 관리, 데이터 비공개.
-- 커뮤니티 구독 규칙: [https://github.com/fishjar/kiss-rules](https://github.com/fishjar/kiss-rules)
+- 커뮤니티 구독 규칙: [Easy Rules](https://github.com/fishjar/kiss-rules)
   - 커뮤니티에서 유지 관리하는 최신의 가장 완벽한 구독 규칙 목록을 제공합니다.
   - 규칙 관련 문제에 대한 도움 요청.
 
@@ -174,7 +174,7 @@ pnpm build
 // `toggle_transbox`    번역 팝업 열기/닫기
 // `toggle_hover_node`  마우스를 올린 문단 번역
 // `input_translate`    입력창 번역
-window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "toggle_translate" }}));
+window.dispatchEvent(new CustomEvent("easy_translator", {detail: { action: "toggle_translate" }}));
 ```
 
 ## 커뮤니티

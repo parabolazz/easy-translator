@@ -1,12 +1,12 @@
 import { getMsauth, setMsauth } from "./storage";
-import { kissLog } from "./log";
+import { easyLog } from "./log";
 import { apiMsAuth } from "../apis";
 
 const parseMSToken = (token) => {
   try {
     return JSON.parse(atob(token.split(".")[1])).exp;
   } catch (err) {
-    kissLog("parseMSToken", err);
+    easyLog("parseMSToken", err);
   }
   return 0;
 };
@@ -44,7 +44,7 @@ const _msAuth = () => {
       await setMsauth(apiToken);
       return { token: apiToken, expiresAt: apiExpiresAt };
     } catch (error) {
-      kissLog("get msauth failed", error);
+      easyLog("get msauth failed", error);
       throw error;
     }
   };

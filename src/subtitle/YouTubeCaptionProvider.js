@@ -232,7 +232,7 @@ class YouTubeCaptionProvider {
       const vtt = buildBilingualVtt(this.#subtitles);
       downloadBlobFile(
         vtt,
-        `kiss-subtitles-${this.#videoId}_${Date.now()}.vtt`
+        `easy-subtitles-${this.#videoId}_${Date.now()}.vtt`
       );
     } catch (error) {
       logger.info("Youtube Provider: download subtitles:", error);
@@ -272,26 +272,26 @@ class YouTubeCaptionProvider {
   }
 
   #injectToggleButton(ytControls) {
-    const kissControls = document.createElement("div");
-    kissControls.className = "notranslate kiss-subtitle-controls";
-    Object.assign(kissControls.style, {
+    const easyControls = document.createElement("div");
+    easyControls.className = "notranslate easy-subtitle-controls";
+    Object.assign(easyControls.style, {
       height: "100%",
       position: "relative",
     });
 
     const toggleButton = document.createElement("button");
-    toggleButton.className = "ytp-button kiss-subtitle-button";
+    toggleButton.className = "ytp-button easy-subtitle-button";
     toggleButton.title = APP_NAME;
 
     toggleButton.appendChild(createLogoSVG());
-    kissControls.appendChild(toggleButton);
+    easyControls.appendChild(toggleButton);
 
     // 使用新的 DomManager 替代 ShadowDomManager
     this.#menuManager = new DomManager({
-      id: "kiss-subtitle-menus",
+      id: "easy-subtitle-menus",
       className: "notranslate",
       reactComponent: Menus,
-      rootElement: kissControls,
+      rootElement: easyControls,
       props: this.#getMenuProps(), // 获取菜单 props
     });
 
@@ -311,7 +311,7 @@ class YouTubeCaptionProvider {
     };
     this.#toggleButton = toggleButton;
 
-    ytControls?.prepend(kissControls);
+    ytControls?.prepend(easyControls);
   }
 
   #isSameLang(lang1, lang2) {
@@ -1112,7 +1112,7 @@ class YouTubeCaptionProvider {
 
   #createNotificationElement() {
     const notificationEl = document.createElement("div");
-    notificationEl.className = "kiss-notification";
+    notificationEl.className = "easy-notification";
     Object.assign(notificationEl.style, {
       position: "absolute",
       top: "40%",

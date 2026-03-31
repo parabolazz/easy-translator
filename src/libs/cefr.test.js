@@ -116,32 +116,32 @@ describe("cefr helpers", () => {
       },
     });
 
-    expect(host.querySelectorAll(".kiss-cefr-word")).toHaveLength(2);
+    expect(host.querySelectorAll(".easy-cefr-word")).toHaveLength(2);
     expect(host.textContent).toBe(
       "Community support can mitigate减轻，缓和 ambiguous模棱两可的 wording."
     );
 
-    const wrappers = Array.from(host.querySelectorAll(".kiss-cefr-word"));
+    const wrappers = Array.from(host.querySelectorAll(".easy-cefr-word"));
     expect(wrappers.map((node) => node.getAttribute("data-word"))).toEqual([
       "mitigate",
       "ambiguous",
     ]);
     wrappers.forEach((node) => {
-      expect(node.getAttribute("data-kiss-cefr")).toBe("1");
-      expect(node.querySelector(".kiss-cefr-gloss")).toBeTruthy();
+      expect(node.getAttribute("data-easy-cefr")).toBe("1");
+      expect(node.querySelector(".easy-cefr-gloss")).toBeTruthy();
       expect(node.querySelector("ruby")).toBeNull();
       expect(node.querySelector("rt")).toBeNull();
     });
 
     const styleTag = document.head.querySelector(
-      'style[data-kiss-cefr-style="1"]'
+      'style[data-easy-cefr-style="1"]'
     );
     expect(styleTag).toBeTruthy();
     expect(styleTag.textContent).toContain("position: absolute;");
     expect(styleTag.textContent).toContain("display: inline;");
     expect(styleTag.textContent).not.toContain("display: inline-block;");
-    expect(styleTag.textContent).toContain(".kiss-cefr-gloss");
-    expect(styleTag.textContent).toContain(".kiss-cefr-gloss:hover");
+    expect(styleTag.textContent).toContain(".easy-cefr-gloss");
+    expect(styleTag.textContent).toContain(".easy-cefr-gloss:hover");
     expect(styleTag.textContent).toContain("backdrop-filter: blur(");
     expect(styleTag.textContent).toContain("bottom: calc(100% - 7px);");
     expect(styleTag.textContent).toContain("opacity: 0.56;");
@@ -170,7 +170,7 @@ describe("cefr helpers", () => {
       },
     });
 
-    expect(host.querySelector(".kiss-cefr-gloss")?.textContent).toBe(
+    expect(host.querySelector(".easy-cefr-gloss")?.textContent).toBe(
       "迅速的、敏捷的"
     );
   });
@@ -204,7 +204,7 @@ describe("cefr helpers", () => {
       insertedNodes.some(
         (node) =>
           node.nodeType === Node.ELEMENT_NODE &&
-          node.classList.contains("kiss-cefr-word")
+          node.classList.contains("easy-cefr-word")
       )
     ).toBe(true);
   });
@@ -226,7 +226,7 @@ describe("cefr helpers", () => {
       hideOrigin: true,
     });
 
-    expect(host.querySelector(".kiss-cefr-word")).toBeNull();
+    expect(host.querySelector(".easy-cefr-word")).toBeNull();
     expect(host.textContent).toBe("Mitigate ambiguity carefully.");
   });
 
@@ -249,12 +249,12 @@ describe("cefr helpers", () => {
       },
     });
 
-    expect(host.querySelectorAll(".kiss-cefr-word")).toHaveLength(2);
+    expect(host.querySelectorAll(".easy-cefr-word")).toHaveLength(2);
 
     removeCEFRAnnotations(host);
 
-    expect(host.querySelector(".kiss-cefr-word")).toBeNull();
-    expect(host.querySelector(".kiss-cefr-gloss")).toBeNull();
+    expect(host.querySelector(".easy-cefr-word")).toBeNull();
+    expect(host.querySelector(".easy-cefr-gloss")).toBeNull();
     expect(host.innerHTML).toBe("Mitigate ambiguous outcomes.");
     expect(host.childNodes).toHaveLength(1);
     expect(host.firstChild.nodeType).toBe(Node.TEXT_NODE);
@@ -299,9 +299,9 @@ describe("cefr helpers", () => {
     host.appendChild(textNode);
 
     const translationWrapper = document.createElement("easy-translator");
-    translationWrapper.className = "kiss-wrapper notranslate";
+    translationWrapper.className = "easy-wrapper notranslate";
     translationWrapper.innerHTML =
-      '<span class="kiss-inner">Translated sibling stays put.</span>';
+      '<span class="easy-inner">Translated sibling stays put.</span>';
     host.appendChild(translationWrapper);
 
     await annotateNodeGroupWithCEFR({
@@ -315,17 +315,17 @@ describe("cefr helpers", () => {
       },
     });
 
-    expect(host.querySelectorAll(".kiss-cefr-word")).toHaveLength(1);
-    expect(host.querySelector(".kiss-wrapper .kiss-inner").textContent).toBe(
+    expect(host.querySelectorAll(".easy-cefr-word")).toHaveLength(1);
+    expect(host.querySelector(".easy-wrapper .easy-inner").textContent).toBe(
       "Translated sibling stays put."
     );
 
     const removed = removeCEFRAnnotations(host);
 
     expect(removed).toBe(1);
-    expect(host.querySelector(".kiss-cefr-word")).toBeNull();
-    expect(host.querySelector(".kiss-wrapper")).toBe(translationWrapper);
-    expect(host.querySelector(".kiss-wrapper .kiss-inner").textContent).toBe(
+    expect(host.querySelector(".easy-cefr-word")).toBeNull();
+    expect(host.querySelector(".easy-wrapper")).toBe(translationWrapper);
+    expect(host.querySelector(".easy-wrapper .easy-inner").textContent).toBe(
       "Translated sibling stays put."
     );
     expect(host.textContent).toContain("Mitigate ambiguity carefully.");

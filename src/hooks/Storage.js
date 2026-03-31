@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { storage } from "../libs/storage";
-import { kissLog } from "../libs/log";
+import { easyLog } from "../libs/log";
 import { syncData } from "../libs/sync";
 import { useDebouncedCallback } from "./DebouncedCallback";
 import { isOptions } from "../libs/browser";
@@ -36,7 +36,7 @@ export function useStorage(key, defaultVal = null, syncKey = "") {
           setData(storedVal);
         }
       } catch (err) {
-        kissLog(`storage load error for key: ${key}`, err);
+        easyLog(`storage load error for key: ${key}`, err);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -59,7 +59,7 @@ export function useStorage(key, defaultVal = null, syncKey = "") {
         setData(res.value);
       }
     } catch (error) {
-      kissLog("Sync failed", keyToSync);
+      easyLog("Sync failed", keyToSync);
     }
   }, []);
 
@@ -76,7 +76,7 @@ export function useStorage(key, defaultVal = null, syncKey = "") {
     }
 
     storage.setObj(key, data).catch((err) => {
-      kissLog(`storage save error for key: ${key}`, err);
+      easyLog(`storage save error for key: ${key}`, err);
     });
 
     // 触发远端同步
@@ -90,7 +90,7 @@ export function useStorage(key, defaultVal = null, syncKey = "") {
    * @param {any | ((prevData: any) => any)} valueOrFn 新的值或一个返回新值的函数。
    */
   const save = useCallback((valueOrFn) => {
-    // kissLog("save storage:", valueOrFn);
+    // easyLog("save storage:", valueOrFn);
     setData((prevData) =>
       typeof valueOrFn === "function" ? valueOrFn(prevData) : valueOrFn
     );
@@ -101,7 +101,7 @@ export function useStorage(key, defaultVal = null, syncKey = "") {
    * @param {object | ((prevData: object) => object)} partialDataOrFn 要合并的对象或一个返回该对象的函数。
    */
   const update = useCallback((partialDataOrFn) => {
-    // kissLog("update storage:", partialDataOrFn);
+    // easyLog("update storage:", partialDataOrFn);
     setData((prevData) => {
       const partialData =
         typeof partialDataOrFn === "function"
@@ -118,12 +118,12 @@ export function useStorage(key, defaultVal = null, syncKey = "") {
    * 从 Storage 中删除该值，并将状态重置为 null。
    */
   const remove = useCallback(async () => {
-    // kissLog("remove storage:");
+    // easyLog("remove storage:");
     try {
       await storage.del(key);
       setData(null);
     } catch (err) {
-      kissLog(`storage remove error for key: ${key}`, err);
+      easyLog(`storage remove error for key: ${key}`, err);
     }
   }, [key]);
 
@@ -131,12 +131,12 @@ export function useStorage(key, defaultVal = null, syncKey = "") {
    * 从 Storage 重新加载数据以覆盖当前状态。
    */
   const reload = useCallback(async () => {
-    // kissLog("reload storage:");
+    // easyLog("reload storage:");
     try {
       const storedVal = await storage.getObj(key);
       setData(storedVal ?? defaultVal);
     } catch (err) {
-      kissLog(`storage reload error for key: ${key}`, err);
+      easyLog(`storage reload error for key: ${key}`, err);
       // setData(defaultVal);
     }
   }, [key, defaultVal]);

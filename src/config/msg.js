@@ -4,7 +4,7 @@ export const CMD_OPEN_OPTIONS = "openOptions";
 export const CMD_OPEN_TRANBOX = "openTranbox";
 export const CMD_OPEN_SEPARATE_WINDOW = "openSeparateWindow";
 
-export const MSG_FETCH = "kiss_fetch";
+export const MSG_FETCH = "easy_fetch";
 export const MSG_GET_HTTPCACHE = "get_httpcache";
 export const MSG_PUT_HTTPCACHE = "put_httpcache";
 export const MSG_OPEN_OPTIONS = "open_options";
@@ -31,15 +31,15 @@ export const MSG_BUILTINAI_TRANSLATE = "builtinai_translte";
 export const MSG_SET_LOGLEVEL = "set_loglevel";
 export const MSG_CLEAR_CACHES = "clear_caches";
 export const MSG_OPEN_SEPARATE_WINDOW = "open_separate_window";
-export const PORT_STREAM_FETCH = "kiss_stream_fetch";
+export const PORT_STREAM_FETCH = "easy_stream_fetch";
 export const MSG_UPDATE_ICON = "update_icon";
 
-export const EVENT_KISS_INNER = "kiss_translator_inner";
-export const EVENT_KISS_TRANSLATOR = "kiss_translator";
+export const EVENT_EASY_INNER = "easy_translator_inner";
+export const EVENT_EASY_TRANSLATOR = "easy_translator";
 
-export const MSG_XHR_DATA_YOUTUBE = "KISS_XHR_DATA_YOUTUBE";
-// export const MSG_GLOBAL_VAR_FETCH = "KISS_GLOBAL_VAR_FETCH";
-// export const MSG_GLOBAL_VAR_BACK = "KISS_GLOBAL_VAR_BACK";
+export const MSG_XHR_DATA_YOUTUBE = "EASY_XHR_DATA_YOUTUBE";
+// export const MSG_GLOBAL_VAR_FETCH = "EASY_GLOBAL_VAR_FETCH";
+// export const MSG_GLOBAL_VAR_BACK = "EASY_GLOBAL_VAR_BACK";
 
 export const MSG_MENUS_PROGRESSED = "progressed";
 export const MSG_MENUS_UPDATEFORM = "updateFormData";

@@ -9,17 +9,18 @@ import MenuItem from "@mui/material/MenuItem";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import {
-  URL_KISS_WORKER,
+  URL_EASY_WORKER,
   OPT_SYNCTYPE_ALL,
   OPT_SYNCTYPE_WORKER,
   OPT_SYNCTYPE_WEBDAV,
   OPT_SYNCTOKEN_PERFIX,
+  normalizeSync,
 } from "../../config";
 import { useState } from "react";
 import { syncSettingAndRules } from "../../libs/sync";
 import { useAlert } from "../../hooks/Alert";
 import { useSetting } from "../../hooks/Setting";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import SyncIcon from "@mui/icons-material/Sync";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
@@ -47,7 +48,7 @@ export default function SyncSetting() {
       reloadSetting();
       alert.success(i18n("sync_success"));
     } catch (err) {
-      kissLog("sync all", err);
+      easyLog("sync all", err);
       alert.error(i18n("sync_failed"));
     } finally {
       setLoading(false);
@@ -66,23 +67,23 @@ export default function SyncSetting() {
       );
       const shareString = `${OPT_SYNCTOKEN_PERFIX}${base64Config}`;
       await navigator.clipboard.writeText(shareString);
-      kissLog("Share string copied to clipboard", shareString);
+      easyLog("Share string copied to clipboard", shareString);
     } catch (error) {
-      kissLog("Failed to copy share string to clipboard", error);
+      easyLog("Failed to copy share string to clipboard", error);
     }
   };
 
   const handleImportFromClipboard = async () => {
     try {
       const text = await navigator.clipboard.readText();
-      kissLog("read_clipboard", text);
+      easyLog("read_clipboard", text);
       if (text.startsWith(OPT_SYNCTOKEN_PERFIX)) {
         const base64Config = text.slice(OPT_SYNCTOKEN_PERFIX.length);
         const jsonString = atob(base64Config);
-        const updatedConfig = JSON.parse(jsonString);
+        const updatedConfig = normalizeSync(JSON.parse(jsonString));
 
         if (!OPT_SYNCTYPE_ALL.includes(updatedConfig.syncType)) {
-          kissLog("error syncType", updatedConfig.syncType);
+          easyLog("error syncType", updatedConfig.syncType);
           return;
         }
 
@@ -94,13 +95,13 @@ export default function SyncSetting() {
             syncKey: updatedConfig.syncKey,
           });
         } else {
-          kissLog("Invalid config structure");
+          easyLog("Invalid config structure");
         }
       } else {
-        kissLog("Invalid share string", text);
+        easyLog("Invalid share string", text);
       }
     } catch (error) {
-      kissLog("Failed to read from clipboard or parse JSON", error);
+      easyLog("Failed to read from clipboard or parse JSON", error);
     }
   };
 
@@ -144,7 +145,7 @@ export default function SyncSetting() {
           onChange={handleChange}
           helperText={
             syncType === OPT_SYNCTYPE_WORKER && (
-              <Link href={URL_KISS_WORKER} target="_blank">
+              <Link href={URL_EASY_WORKER} target="_blank">
                 {i18n("about_sync_api")}
               </Link>
             )

@@ -5,10 +5,10 @@ export const URL_CACHE_SUBTITLE = `https://${APP_LCNAME}/subtitle`;
 export const URL_CACHE_DELANG = `https://${APP_LCNAME}/detectlang`;
 export const URL_CACHE_BINGDICT = `https://${APP_LCNAME}/bingdict`;
 
-export const URL_KISS_WORKER = "https://github.com/fishjar/kiss-worker";
-export const URL_KISS_PROXY = "https://github.com/fishjar/kiss-proxy";
-export const URL_KISS_RULES = "https://github.com/fishjar/kiss-rules";
-export const URL_KISS_RULES_NEW_ISSUE =
+export const URL_EASY_WORKER = "https://github.com/fishjar/kiss-worker";
+export const URL_EASY_PROXY = "https://github.com/fishjar/kiss-proxy";
+export const URL_EASY_RULES = "https://github.com/fishjar/kiss-rules";
+export const URL_EASY_RULES_NEW_ISSUE =
   "https://github.com/fishjar/kiss-rules/issues/new";
 export const URL_RAW_PREFIX =
   "https://raw.githubusercontent.com/fishjar/easy-translator/master";

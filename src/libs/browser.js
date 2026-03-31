@@ -8,14 +8,14 @@ function _browser() {
   try {
     return require("webextension-polyfill");
   } catch (err) {
-    // kissLog("browser", err);
+    // easyLog("browser", err);
   }
 }
 
 export const browser = _browser();
 
 export const getContext = () => {
-  const context = globalThis.__KISS_CONTEXT__;
+  const context = globalThis.__EASY_CONTEXT__;
   if (context) return context;
 
   // if (typeof window === "undefined" || typeof document === "undefined") {
