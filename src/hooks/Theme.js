@@ -18,6 +18,9 @@ export default function Theme({ children, options = {}, styles = {} }) {
       return;
     }
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    if (!mediaQuery || typeof mediaQuery.matches !== "boolean") {
+      return;
+    }
     const handleChange = () => {
       setSystemMode(mediaQuery.matches ? THEME_DARK : THEME_LIGHT);
     };
@@ -37,6 +40,7 @@ export default function Theme({ children, options = {}, styles = {} }) {
 
     const isDarkMode =
       darkMode === "dark" || (darkMode === "auto" && systemMode === THEME_DARK);
+    const surfaceRadius = 10;
 
     const baseTheme = createTheme({
       palette: {
@@ -61,7 +65,7 @@ export default function Theme({ children, options = {}, styles = {} }) {
         fontFamily: '"SF Pro Text", "SF Pro Icons", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif',
       },
       shape: {
-        borderRadius: 16, // Smoother, iOS-like squircle approximation
+        borderRadius: surfaceRadius,
       },
       components: {
         MuiButton: {
@@ -70,7 +74,7 @@ export default function Theme({ children, options = {}, styles = {} }) {
               textTransform: "none",
               fontWeight: 600,
               padding: "8px 18px",
-              borderRadius: 16,
+              borderRadius: surfaceRadius,
             },
             containedPrimary: {
               background: "#FF9500",
@@ -108,10 +112,18 @@ export default function Theme({ children, options = {}, styles = {} }) {
                 : "0 12px 40px rgba(0,0,0,0.12)",
             },
             root: {
+              borderRadius: surfaceRadius,
               backgroundImage: "none",
               backgroundColor: isDarkMode ? "rgba(28, 28, 30, 0.85)" : "rgba(255, 255, 255, 0.85)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)", // iOS glassmorphism effect
+            },
+          },
+        },
+        MuiDialog: {
+          styleOverrides: {
+            paper: {
+              borderRadius: surfaceRadius,
             },
           },
         },
@@ -129,6 +141,7 @@ export default function Theme({ children, options = {}, styles = {} }) {
         MuiDrawer: {
           styleOverrides: {
             paper: {
+              borderRadius: surfaceRadius,
               borderRight: "none",
               backgroundColor: isDarkMode ? "rgba(28, 28, 30, 0.8)" : "rgba(242, 242, 247, 0.8)",
               backdropFilter: "blur(20px)",
