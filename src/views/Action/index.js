@@ -7,13 +7,14 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import useWindowSize from "../../hooks/WindowSize";
 import {
-  EVENT_KISS_INNER,
+  EVENT_EASY_INNER,
   MSG_OPEN_OPTIONS,
   MSG_POPUP_TOGGLE,
 } from "../../config";
 import PopupCont from "../Popup/PopupCont";
 import { isExt } from "../../libs/client";
 import { sendBgMsg } from "../../libs/msg";
+import { openOptionsHash } from "../../libs/optionsPage";
 
 export default function Action({ translator, processActions }) {
   const [showPopup, setShowPopup] = useState(true);
@@ -27,6 +28,10 @@ export default function Action({ translator, processActions }) {
     } else {
       window.open(process.env.REACT_APP_OPTIONSPAGE, "_blank");
     }
+  }, []);
+
+  const handleOpenCEFR = useCallback(() => {
+    openOptionsHash();
   }, []);
 
   useEffect(() => {
@@ -46,9 +51,9 @@ export default function Action({ translator, processActions }) {
       }
     };
 
-    document.addEventListener(EVENT_KISS_INNER, handleStatusUpdate);
+    document.addEventListener(EVENT_EASY_INNER, handleStatusUpdate);
     return () => {
-      document.removeEventListener(EVENT_KISS_INNER, handleStatusUpdate);
+      document.removeEventListener(EVENT_EASY_INNER, handleStatusUpdate);
     };
   }, []);
 
@@ -99,6 +104,7 @@ export default function Action({ translator, processActions }) {
                 setRule={setRule}
                 setSetting={setSetting}
                 handleOpenSetting={handleOpenSetting}
+                handleOpenCEFR={handleOpenCEFR}
                 processActions={processActions}
                 isContent={true}
               />

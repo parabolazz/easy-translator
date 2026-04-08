@@ -1,10 +1,10 @@
-# KISS Translator シンプル翻訳
+# Easy Translator シンプル翻訳
 
 [English](README.en.md) | [中文](README.md) | [日本語](README.ja.md) | [한국어](README.ko.md)
 
-シンプルでオープンソースの [バイリンガル対照翻訳拡張機能＆ユーザースクリプト](https://github.com/fishjar/kiss-translator)です。
+シンプルでオープンソースの [バイリンガル対照翻訳拡張機能＆ユーザースクリプト](https://github.com/fishjar/easy-translator)です。
 
-[kiss-translator.webm](https://github.com/fishjar/kiss-translator/assets/1157624/f7ba8a5c-e4a8-4d5a-823a-5c5c67a0a47f)
+[easy-translator.webm](https://github.com/fishjar/easy-translator/assets/1157624/f7ba8a5c-e4a8-4d5a-823a-5c5c67a0a47f)
 
 ## 特徴
 
@@ -53,7 +53,7 @@
   - [x] カスタムAI用語集
   - [x] すべてのインターフェースがフックやカスタムパラメータなどの高度な機能をサポート
 - [x] クライアント間のデータ同期
-  - [x] KISS-Worker（cloudflare/docker）
+  - [x] Easy-Worker（cloudflare/docker）
   - [x] WebDAV
 - [x] カスタム翻訳ルール
   - [x] ルールの購読/ルール共有
@@ -74,27 +74,27 @@
 > - ユーザースクリプトはより多くの問題（クロスドメイン問題、スクリプトの競合など）に遭遇する可能性があります
 
 - [x] ブラウザ拡張機能
-  - [x] Chrome [インストール](https://chrome.google.com/webstore/detail/kiss-translator/bdiifdefkgmcblbcghdlonllpjhhjgof?hl=ja)
+  - [x] Chrome [インストール](https://chrome.google.com/webstore/detail/easy-translator/bdiifdefkgmcblbcghdlonllpjhhjgof?hl=ja)
     - [x] Kiwi (Android)
     - [x] Orion (iOS)
   - [x] Edge [インストール](https://microsoftedge.microsoft.com/addons/detail/%E7%AE%80%E7%BA%A6%E7%BF%BB%E8%AF%91/jemckldkclkinpjighnoilpbldbdmmlh?hl=ja)
-  - [x] Firefox [インストール](https://addons.mozilla.org/ja/firefox/addon/kiss-translator/)
+  - [x] Firefox [インストール](https://addons.mozilla.org/ja/firefox/addon/easy-translator/)
   - [ ] Safari
     - [ ] Safari (Mac)
     - [ ] Safari (iOS) 
-  - [x] Thunderbird [ダウンロード](https://github.com/fishjar/kiss-translator/releases)
+  - [x] Thunderbird [ダウンロード](https://github.com/fishjar/easy-translator/releases)
 - [x] ユーザースクリプト
-  - [x] Chrome/Edge/Firefox ([Tampermonkey](https://www.tampermonkey.net/)/[Violentmonkey](https://violentmonkey.github.io/)) [インストールリンク](https://fishjar.github.io/kiss-translator/kiss-translator.user.js)
-    - [Greasy Fork](https://greasyfork.org/zh-CN/scripts/472840-kiss-translator)
-  - [x] iOS Safari ([Userscripts Safari](https://github.com/quoid/userscripts)) [インストールリンク](https://fishjar.github.io/kiss-translator/kiss-translator-ios-safari.user.js)
+  - [x] Chrome/Edge/Firefox ([Tampermonkey](https://www.tampermonkey.net/)/[Violentmonkey](https://violentmonkey.github.io/)) [インストールリンク](https://fishjar.github.io/easy-translator/easy-translator.user.js)
+    - [Greasy Fork](https://greasyfork.org/zh-CN/scripts/472840-easy-translator)
+  - [x] iOS Safari ([Userscripts Safari](https://github.com/quoid/userscripts)) [インストールリンク](https://fishjar.github.io/easy-translator/easy-translator-ios-safari.user.js)
 
 ## 関連プロジェクト
 
-- データ同期サービス: [https://github.com/fishjar/kiss-worker](https://github.com/fishjar/kiss-worker)
+- データ同期サービス: [Easy-Worker](https://github.com/fishjar/kiss-worker)
   - 本プロジェクトのデータ同期サービスとして使用できます。
   - 個人のプライベートなルールリストの共有にも使用できます。
   - セルフホスト、セルフマネジメント、データはプライベート。
-- コミュニティ購読ルール: [https://github.com/fishjar/kiss-rules](https://github.com/fishjar/kiss-rules)
+- コミュニティ購読ルール: [Easy Rules](https://github.com/fishjar/kiss-rules)
   - コミュニティによってメンテナンスされた、最新かつ最も完全な購読ルールリストを提供します。
   - ルール関連の問題についての助けを求める。
 
@@ -121,12 +121,12 @@ APIテストの失敗には、一般的に以下の原因が考えられます�
   - 例えば `Ollama` にはネイティブAPIアドレスと `Openai` 互換のアドレスがありますが、本プラグインは現在、`Openai` 互換アドレスをサポートしており、`Ollama` ネイティブAPIアドレスはサポートしていません
 - 一部のAIモデルが統合翻訳をサポートしていない：
   - この場合、統合翻訳を無効にするか、カスタムAPIを使用して対応できます。
-  - または、カスタムAPIを使用して対応します。詳細は[カスタムAPIサンプルドキュメント](https://github.com/fishjar/kiss-translator/blob/master/custom-api_v2.md)を参照してください
+  - または、カスタムAPIを使用して対応します。詳細は[カスタムAPIサンプルドキュメント](https://github.com/fishjar/easy-translator/blob/master/custom-api_v2.md)を参照してください
 - 一部のAIモデルでパラメータが一致しない：
   - 例えば `Gemini` のネイティブAPIはパラメータの不一致が大きく、一部のバージョンのモデルが特定のパラメータをサポートしていないためエラーが返されることがあります。
   - この場合、`Hook` を使用してリクエスト `body` を変更するか、`Gemini2` (`Openai` 互換アドレス) に切り替えることができます
 - サーバーのクロスドメイン制限によりアクセスが拒否され、403エラーが返される：
-  - 例えば `Ollama` を起動する際に、環境変数 `OLLAMA_ORIGINS=*` を追加する必要があります。参考：https://github.com/fishjar/kiss-translator/issues/174
+  - 例えば `Ollama` を起動する際に、環境変数 `OLLAMA_ORIGINS=*` を追加する必要があります。参考：https://github.com/fishjar/easy-translator/issues/174
 
 ### 入力したAPIがユーザースクリプトで使用できない
 
@@ -136,11 +136,11 @@ APIテストの失敗には、一般的に以下の原因が考えられます�
 
 カスタムAPI機能は非常に強力で柔軟性があり、理論的にはどんな翻訳APIにも接続できます。
 
-サンプル参照： [custom-api_v2.md](https://github.com/fishjar/kiss-translator/blob/master/custom-api_v2.md)
+サンプル参照： [custom-api_v2.md](https://github.com/fishjar/easy-translator/blob/master/custom-api_v2.md)
 
 ### ユーザースクリプトの設定ページに直接アクセスする方法
 
-設定ページアドレス： https://fishjar.github.io/kiss-translator/options.html
+設定ページアドレス： https://fishjar.github.io/easy-translator/options.html
 
 ## 今後の計画 
 
@@ -153,13 +153,13 @@ APIテストの失敗には、一般的に以下の原因が考えられます�
 - [x] **YouTube字幕サポートの最適化**：ストリーミング字幕の結合と翻訳体験を改善し、途切れを減らします。
 - [ ] **ルール共同構築メカニズムのアップグレード**：より柔軟なルールの共有、バージョン管理、コミュニティレビュープロセスを導入します。
  
- 特定の方向に興味がある場合は、[Issues](https://github.com/fishjar/kiss-translator/issues) で議論したり、PRを送信したりすることを歓迎します！
+ 特定の方向に興味がある場合は、[Issues](https://github.com/fishjar/easy-translator/issues) で議論したり、PRを送信したりすることを歓迎します！
 
 ## 開発ガイド
 
 ```sh
-git clone [https://github.com/fishjar/kiss-translator.git](https://github.com/fishjar/kiss-translator.git)
-cd kiss-translator
+git clone [https://github.com/fishjar/easy-translator.git](https://github.com/fishjar/easy-translator.git)
+cd easy-translator
 git checkout dev # PRを送信する場合はdevブランチにプッシュすることをお勧めします
 pnpm install
 pnpm build
@@ -174,7 +174,7 @@ pnpm build
 // `toggle_transbox`    翻訳ポップアップを開く／閉じる
 // `toggle_hover_node`  マウスオーバー中の段落を翻訳
 // `input_translate`    入力欄を翻訳
-window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "toggle_translate" }}));
+window.dispatchEvent(new CustomEvent("easy_translator", {detail: { action: "toggle_translate" }}));
 ```
 
 ## コミュニケーション
@@ -183,7 +183,7 @@ window.dispatchEvent(new CustomEvent("kiss_translator", {detail: { action: "togg
 
 ## 寄付
 
-![appreciate](https://github.com/fishjar/kiss-translator/assets/1157624/ebaecabe-2934-4172-8085-af236f5ee399)
+![appreciate](https://github.com/fishjar/easy-translator/assets/1157624/ebaecabe-2934-4172-8085-af236f5ee399)
 
 ## スポンサー
 

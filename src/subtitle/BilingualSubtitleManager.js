@@ -7,19 +7,19 @@ import { isMobile } from "../libs/mobile.js";
 
 // 添加CSS样式用于高亮显示悬停的单词
 const addWordHoverStyles = () => {
-  if (document.getElementById("kiss-word-hover-styles")) return;
+  if (document.getElementById("easy-word-hover-styles")) return;
 
   const style = document.createElement("style");
-  style.id = "kiss-word-hover-styles";
+  style.id = "easy-word-hover-styles";
   style.textContent = `
-    .kiss-word-hover {
+    .easy-word-hover {
       cursor: pointer;
       text-decoration: underline;
       text-decoration-color: #4fc3f7;
       text-decoration-thickness: 2px;
     }
     
-    .kiss-word-tooltip {
+    .easy-word-tooltip {
       position: fixed;
       background: rgba(0, 0, 0, 0.9);
       color: white;
@@ -35,7 +35,7 @@ const addWordHoverStyles = () => {
       font-family: Arial, sans-serif;
     }
     
-    .kiss-word-tooltip-header {
+    .easy-word-tooltip-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -45,7 +45,7 @@ const addWordHoverStyles = () => {
       color: #4fc3f7;
     }
     
-    .kiss-word-tooltip-close {
+    .easy-word-tooltip-close {
       background: none;
       border: none;
       color: #aaa;
@@ -60,48 +60,48 @@ const addWordHoverStyles = () => {
       justify-content: center;
     }
     
-    .kiss-word-tooltip-close:hover {
+    .easy-word-tooltip-close:hover {
       color: white;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
     }
     
-    .kiss-word-loading {
+    .easy-word-loading {
       color: #bbb;
       font-style: italic;
     }
     
-    .kiss-word-definition {
+    .easy-word-definition {
       margin: 4px 0;
     }
     
-    .kiss-word-pos {
+    .easy-word-pos {
       color: #4fc3f7;
       font-weight: bold;
     }
     
-    .kiss-word-phonetic {
+    .easy-word-phonetic {
       color: #bbb;
       font-style: italic;
       margin-right: 10px;
     }
     
-    .kiss-word-example {
+    .easy-word-example {
       margin-top: 10px;
       padding-top: 8px;
       border-top: 1px solid #444;
     }
     
-    .kiss-word-example-title {
+    .easy-word-example-title {
       font-weight: bold;
       margin-bottom: 5px;
     }
     
-    .kiss-word-example-sentence {
+    .easy-word-example-sentence {
       margin-bottom: 3px;
     }
     
-    .kiss-word-example-translation {
+    .easy-word-example-translation {
       color: #bbb;
       font-style: italic;
     }
@@ -208,7 +208,7 @@ export class BilingualSubtitleManager {
    */
   #createCaptionWindow() {
     const container = document.createElement("div");
-    container.className = `kiss-caption-container notranslate`;
+    container.className = `easy-caption-container notranslate`;
     Object.assign(container.style, {
       position: "absolute",
       width: "100%",
@@ -219,7 +219,7 @@ export class BilingualSubtitleManager {
     });
 
     const paper = document.createElement("div");
-    paper.className = `kiss-caption-paper`;
+    paper.className = `easy-caption-paper`;
     Object.assign(paper.style, {
       position: "absolute",
       width: "80%",
@@ -235,7 +235,7 @@ export class BilingualSubtitleManager {
     this.#paperEl = paper;
 
     this.#captionWindowEl = document.createElement("div");
-    this.#captionWindowEl.className = `kiss-caption-window`;
+    this.#captionWindowEl.className = `easy-caption-window`;
     this.#captionWindowEl.style.cssText = this.#setting.windowStyle;
     this.#captionWindowEl.style.pointerEvents = "auto";
     this.#captionWindowEl.style.cursor = "grab";
@@ -288,14 +288,14 @@ export class BilingualSubtitleManager {
   // 处理单词悬停事件
   #handleWordHover(event) {
     const target = event.target;
-    if (target.classList.contains("kiss-subtitle-word")) {
+    if (target.classList.contains("easy-subtitle-word")) {
       // 清除之前的定时器
       if (this.#hoverTimeout) {
         clearTimeout(this.#hoverTimeout);
         this.#hoverTimeout = null;
       }
 
-      target.classList.add("kiss-word-hover");
+      target.classList.add("easy-word-hover");
 
       // 延迟显示tooltip，避免误触
       this.#hoverTimeout = setTimeout(() => {
@@ -311,8 +311,8 @@ export class BilingualSubtitleManager {
   // 处理鼠标移出事件
   #handleWordHoverOut(event) {
     const target = event.target;
-    if (target.classList.contains("kiss-subtitle-word")) {
-      target.classList.remove("kiss-word-hover");
+    if (target.classList.contains("easy-subtitle-word")) {
+      target.classList.remove("easy-word-hover");
 
       // 清除显示定时器
       if (this.#hoverTimeout) {
@@ -335,14 +335,14 @@ export class BilingualSubtitleManager {
 
   #attachSpanListeners() {
     if (!this.#captionWindowEl) return;
-    const spans = this.#captionWindowEl.querySelectorAll(".kiss-subtitle-word");
+    const spans = this.#captionWindowEl.querySelectorAll(".easy-subtitle-word");
     spans.forEach((span) => {
-      if (span.dataset.kissListenerAttached) return;
+      if (span.dataset.easyListenerAttached) return;
       const enterHandler = (e) => this.#handleWordHover(e);
       const leaveHandler = (e) => this.#handleWordHoverOut(e);
       span.addEventListener("pointerenter", enterHandler);
       span.addEventListener("pointerleave", leaveHandler);
-      span.dataset.kissListenerAttached = "1";
+      span.dataset.easyListenerAttached = "1";
     });
   }
 
@@ -355,9 +355,9 @@ export class BilingualSubtitleManager {
 
     // 创建提示框
     this.#tooltipEl = document.createElement("div");
-    this.#tooltipEl.className = "kiss-word-tooltip";
+    this.#tooltipEl.className = "easy-word-tooltip";
     this.#tooltipEl.innerHTML = trustedTypesHelper.createHTML(
-      '<div class="kiss-word-loading">Looking up...</div>'
+      '<div class="easy-word-loading">Looking up...</div>'
     );
 
     // 将提示框定位在播放器右上角
@@ -421,7 +421,7 @@ export class BilingualSubtitleManager {
       const currentTimeMs = this.#getCurrentSubtitleStartTime();
 
       // 添加单词和完整信息到生词本
-      const event = new CustomEvent("kiss-add-word", {
+      const event = new CustomEvent("easy-add-word", {
         detail: {
           word,
           phonetic, // 现在只包含音标本身，如 ɪnˈkredəb(ə)l
@@ -436,9 +436,9 @@ export class BilingualSubtitleManager {
         dictResult &&
         (dictResult.trs || dictResult.aus || dictResult.sentences)
       ) {
-        let content = `<div class="kiss-word-tooltip-header">
+        let content = `<div class="easy-word-tooltip-header">
           <span>${word}</span>
-          <button class="kiss-word-tooltip-close" onclick="this.closest('.kiss-word-tooltip').remove()">×</button>
+          <button class="easy-word-tooltip-close" onclick="this.closest('.easy-word-tooltip').remove()">×</button>
         </div>`;
 
         // 显示音标
@@ -446,7 +446,7 @@ export class BilingualSubtitleManager {
           content += "<div>";
           dictResult.aus.forEach((au) => {
             if (au.phonetic) {
-              content += `<span class="kiss-word-phonetic">${au.phonetic}</span>`;
+              content += `<span class="easy-word-phonetic">${au.phonetic}</span>`;
             }
           });
           content += "</div>";
@@ -455,17 +455,17 @@ export class BilingualSubtitleManager {
         // 显示释义
         if (dictResult.trs) {
           dictResult.trs.slice(0, 3).forEach((tr) => {
-            content += `<div class="kiss-word-definition">${tr.pos ? '<span class="kiss-word-pos">' + tr.pos + "</span> " : ""}${tr.def}</div>`;
+            content += `<div class="easy-word-definition">${tr.pos ? '<span class="easy-word-pos">' + tr.pos + "</span> " : ""}${tr.def}</div>`;
           });
         }
 
         // 显示例句
         if (dictResult.sentences && dictResult.sentences.length > 0) {
-          content += `<div class="kiss-word-example">
-            <div class="kiss-word-example-title">例句</div>`;
+          content += `<div class="easy-word-example">
+            <div class="easy-word-example-title">例句</div>`;
           dictResult.sentences.slice(0, 2).forEach((sentence) => {
-            content += `<div class="kiss-word-example-sentence">${sentence.eng}</div>
-              <div class="kiss-word-example-translation">${sentence.chs}</div>`;
+            content += `<div class="easy-word-example-sentence">${sentence.eng}</div>
+              <div class="easy-word-example-translation">${sentence.chs}</div>`;
           });
           content += "</div>";
         }
@@ -476,11 +476,11 @@ export class BilingualSubtitleManager {
       } else {
         if (this.#tooltipEl) {
           this.#tooltipEl.innerHTML =
-            trustedTypesHelper.createHTML(`<div class="kiss-word-tooltip-header">
+            trustedTypesHelper.createHTML(`<div class="easy-word-tooltip-header">
           <span>${word}</span>
-          <button class="kiss-word-tooltip-close" onclick="this.closest('.kiss-word-tooltip').remove()">×</button>
+          <button class="easy-word-tooltip-close" onclick="this.closest('.easy-word-tooltip').remove()">×</button>
         </div>
-        <div class="kiss-word-definition">No definition found</div>`);
+        <div class="easy-word-definition">No definition found</div>`);
         }
       }
     } catch (error) {
@@ -490,7 +490,7 @@ export class BilingualSubtitleManager {
       const currentTimeMs = this.#getCurrentSubtitleStartTime();
 
       // 即使查询失败，也将单词添加到生词本（无完整信息）
-      const event = new CustomEvent("kiss-add-word", {
+      const event = new CustomEvent("easy-add-word", {
         detail: {
           word,
           phonetic: "",
@@ -503,11 +503,11 @@ export class BilingualSubtitleManager {
 
       if (this.#tooltipEl) {
         this.#tooltipEl.innerHTML =
-          trustedTypesHelper.createHTML(`<div class="kiss-word-tooltip-header">
+          trustedTypesHelper.createHTML(`<div class="easy-word-tooltip-header">
         <span>${word}</span>
-        <button class="kiss-word-tooltip-close" onclick="this.closest('.kiss-word-tooltip').remove()">×</button>
+        <button class="easy-word-tooltip-close" onclick="this.closest('.easy-word-tooltip').remove()">×</button>
       </div>
-      <div class="kiss-word-definition">Failed to load definition</div>`);
+      <div class="easy-word-definition">Failed to load definition</div>`);
       }
     }
   }
@@ -712,7 +712,7 @@ export class BilingualSubtitleManager {
     // 这个正则表达式匹配英文单词（包括带撇号的）
     return text.replace(
       /\b([a-zA-Z]+(?:'[a-zA-Z]+)?)\b/g,
-      '<span class="kiss-subtitle-word" data-word="$1">$1</span>'
+      '<span class="easy-subtitle-word" data-word="$1">$1</span>'
     );
   }
 

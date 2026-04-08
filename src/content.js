@@ -1,5 +1,5 @@
 import { run } from "./common";
 
-globalThis.__KISS_CONTEXT__ = "content";
+globalThis.__EASY_CONTEXT__ = "content";
 
 run();

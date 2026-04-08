@@ -21,7 +21,7 @@ import { apiSyncData } from "../apis";
 import { sha256, removeEndchar } from "./utils";
 import { createClient, getPatcher } from "webdav";
 import { fetchPatcher } from "./fetch";
-import { kissLog } from "./log";
+import { easyLog } from "./log";
 
 getPatcher().patch("request", (opts) => {
   return fetchPatcher(opts.url, {
@@ -127,7 +127,7 @@ export const trySyncSetting = async () => {
   try {
     await syncSetting();
   } catch (err) {
-    kissLog("sync setting", err.message);
+    easyLog("sync setting", err.message);
   }
 };
 
@@ -147,7 +147,7 @@ export const trySyncRules = async () => {
   try {
     await syncRules();
   } catch (err) {
-    kissLog("sync user rules", err.message);
+    easyLog("sync user rules", err.message);
   }
 };
 
@@ -167,7 +167,7 @@ export const trySyncWords = async () => {
   try {
     await syncWords();
   } catch (err) {
-    kissLog("sync fav words", err.message);
+    easyLog("sync fav words", err.message);
   }
 };
 

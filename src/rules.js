@@ -8,7 +8,7 @@ import { BUILTIN_RULES } from "./config/rules";
     const data = JSON.stringify(BUILTIN_RULES, null, 2);
     const file = path.resolve(
       __dirname,
-      "../build/web/kiss-translator-rules.json"
+      "../build/web/easy-translator-rules.json"
     );
     fs.writeFileSync(file, data);
     console.info(`Built-in rules generated: ${file}`);

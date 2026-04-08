@@ -27,7 +27,7 @@ import {
   parseAITerms,
 } from "./utils";
 import { apiTranslate } from "../apis";
-import { kissLog } from "./log";
+import { easyLog } from "./log";
 import { clearAllBatchQueue } from "./batchQueue";
 import { genTextClass } from "./style";
 import { createLoadingSVG, createRetrySVG } from "./svg";
@@ -39,7 +39,7 @@ import { injectInternalCss } from "./injector";
 import { isExt } from "./client";
 import { sendBgMsg } from "./msg";
 import { getDocInfo } from "./docInfo";
-import { maybeAnnotateTranslatedText } from "./cefr";
+import { annotateNodeGroupWithCEFR, removeCEFRAnnotations } from "./cefr";
 
 /**
  * @class Translator
@@ -166,7 +166,7 @@ export class Translator {
   };
 
   // 译文相关class
-  static KISS_CLASS = {
+  static EASY_CLASS = {
     warpper: `${APP_LCNAME}-wrapper`,
     inner: `${APP_LCNAME}-inner`,
     term: `${APP_LCNAME}-term`,
@@ -280,7 +280,7 @@ export class Translator {
   }
 
   // 内置忽略元素
-  static KISS_IGNORE_SELECTOR = `.${Translator.KISS_CLASS.warpper}, .kiss-caption-container, .kiss-subtitle-controls, #kiss-youtube-subtitle-list-container,
+  static EASY_IGNORE_SELECTOR = `.${Translator.EASY_CLASS.warpper}, .easy-caption-container, .easy-subtitle-controls, #easy-youtube-subtitle-list-container,
   #${APP_CONSTS.fabID}, .${APP_CONSTS.fabID}_warpper,
   #${APP_CONSTS.boxID}, .${APP_CONSTS.boxID}_warpper,
   #${APP_CONSTS.popupID}, .${APP_CONSTS.popupID}_warpper`;
@@ -338,10 +338,10 @@ export class Translator {
   // 忽略元素
   get #ignoreSelector() {
     if (this.#rule.scanAll === "true" || this.#rule.isPlainText) {
-      return Translator.KISS_IGNORE_SELECTOR;
+      return Translator.EASY_IGNORE_SELECTOR;
     }
 
-    const selectors = [Translator.KISS_IGNORE_SELECTOR];
+    const selectors = [Translator.EASY_IGNORE_SELECTOR];
     if (this.#rule.autoScan !== "false") {
       selectors.push(Translator.BUILTIN_IGNORE_SELECTOR);
     }
@@ -504,14 +504,14 @@ export class Translator {
   }
 
   #handleWindowMessage(event) {
-    if (event.data?.type === "KISS_SHADOW_ROOT_CREATED") {
+    if (event.data?.type === "EASY_SHADOW_ROOT_CREATED") {
       this.#debouncedFindShadowRoot();
     }
   }
 
   #attachShadowRootListener() {
     if (!this.#isShadowRootJsInjected) {
-      const id = "kiss-translator-inject-shadowroot-js";
+      const id = "easy-translator-inject-shadowroot-js";
       injectJs(INJECTOR.shadowroot, id);
 
       this.#isShadowRootJsInjected = true;
@@ -531,7 +531,7 @@ export class Translator {
         this.#startObserveShadowRoot(shadowRoot);
       });
     } catch (err) {
-      kissLog("findAllShadowRoots", err);
+      easyLog("findAllShadowRoots", err);
     }
   }
 
@@ -581,7 +581,7 @@ export class Translator {
           termPatterns.push(`(${key})`);
           this.#termValues.push(value);
         } catch (err) {
-          kissLog(`Invalid RegExp for term: "${key}"`, err);
+          easyLog(`Invalid RegExp for term: "${key}"`, err);
         }
       }
     }
@@ -605,7 +605,7 @@ export class Translator {
   //         .filter(([k]) => k)
   //     );
   //   } catch (err) {
-  //     kissLog("parse aiterms", err);
+  //     easyLog("parse aiterms", err);
   //   }
   // }
 
@@ -616,7 +616,7 @@ export class Translator {
   //     const description = meta?.getAttribute("content") || "";
   //     return truncateWords(description);
   //   } catch (err) {
-  //     kissLog("get description", err);
+  //     easyLog("get description", err);
   //   }
   //   return "";
   // }
@@ -779,7 +779,7 @@ export class Translator {
         }
       }
     } catch (err) {
-      kissLog("无法访问某个 shadowRoot", err);
+      easyLog("无法访问某个 shadowRoot", err);
     }
     // const end = performance.now();
     // const duration = end - start;
@@ -1041,7 +1041,7 @@ export class Translator {
       if (i % 2 === 1) {
         // 奇数索引是匹配到的关键词
         const bTag = document.createElement("b");
-        bTag.className = Translator.KISS_CLASS.highlight;
+        bTag.className = Translator.EASY_CLASS.highlight;
         bTag.style.cssText = this.#rule.highlightStyle || "";
         bTag.textContent = fragment;
         this.#skipMoNodes.add(bTag);
@@ -1154,7 +1154,7 @@ export class Translator {
         textLength = 0;
 
         const br = document.createElement("br");
-        br.className = Translator.KISS_CLASS.br;
+        br.className = Translator.EASY_CLASS.br;
         this.#skipMoNodes.add(br);
 
         node.after(br);
@@ -1167,7 +1167,7 @@ export class Translator {
     if (!parentNode) return;
 
     const highlightedElements = parentNode.querySelectorAll(
-      `.${Translator.KISS_CLASS.highlight}`
+      `.${Translator.EASY_CLASS.highlight}`
     );
 
     highlightedElements.forEach((element) => {
@@ -1183,7 +1183,7 @@ export class Translator {
     if (!parentNode) return;
 
     parentNode
-      .querySelectorAll(`.${Translator.KISS_CLASS.br}`)
+      .querySelectorAll(`.${Translator.EASY_CLASS.br}`)
       .forEach((br) => br.remove());
 
     parentNode.normalize();
@@ -1283,7 +1283,7 @@ export class Translator {
       if (this.#isInvalidText(processedString)) return;
 
       const wrapper = document.createElement(this.#translationTagName);
-      wrapper.className = `${Translator.KISS_CLASS.warpper} notranslate`;
+      wrapper.className = `${Translator.EASY_CLASS.warpper} notranslate`;
 
       if (processedString.length > newlineLength) {
         const br = document.createElement("br");
@@ -1292,7 +1292,7 @@ export class Translator {
       }
 
       const inner = document.createElement(transTag);
-      inner.className = `${Translator.KISS_CLASS.inner} ${this.#textClass[textStyle] || ""}`;
+      inner.className = `${Translator.EASY_CLASS.inner} ${this.#textClass[textStyle] || ""}`;
       if (textExtStyle?.trim()) {
         inner.style.cssText = textExtStyle; // 附加内联样式
       }
@@ -1301,14 +1301,13 @@ export class Translator {
       nodes[nodes.length - 1].after(wrapper);
 
       const currentRunId = this.#runId;
-      const { trText, isSame } = await this.#translateFetch(processedString, deLang);
+      const { trText, isSame } = await this.#translateFetch(
+        processedString,
+        deLang
+      );
       let translatedText = trText;
       const isSameLang = isSame;
-      translatedText = await maybeAnnotateTranslatedText({
-        translatedText,
-        targetLang: toLang,
-        cefrSetting: this.#setting.cefrSetting,
-      });
+
       if (this.#runId !== currentRunId) {
         throw new Error("Request terminated");
       }
@@ -1334,9 +1333,16 @@ export class Translator {
       this.#translationNodes.set(wrapper, {
         nodes,
         isHide: hideOrigin,
+        sourceLang: deLang || this.#rule.fromLang,
       });
       if (hideOrigin) {
         this.#removeNodes(nodes);
+      } else {
+        void this.#annotateOriginalNodeGroupWithCEFR(
+          nodes,
+          deLang || this.#rule.fromLang,
+          hideOrigin
+        );
       }
 
       // 附加样式
@@ -1374,11 +1380,11 @@ export class Translator {
             }
           );
         } catch (err) {
-          kissLog("transEndHook", err);
+          easyLog("transEndHook", err);
         }
       }
     } catch (err) {
-      kissLog("translate group error: ", err.message);
+      easyLog("translate group error: ", err.message);
       if (err.message === "Request terminated") {
         this.#cleanupDirectTranslations(hostNode);
         return;
@@ -1387,16 +1393,16 @@ export class Translator {
       // 失败重试按钮
       try {
         const wrapper = hostNode.querySelector(
-          `:scope > .${Translator.KISS_CLASS.warpper}:last-of-type`
+          `:scope > .${Translator.EASY_CLASS.warpper}:last-of-type`
         );
         if (wrapper) {
           const inner = wrapper.querySelector(
-            `.${Translator.KISS_CLASS.inner}`
+            `.${Translator.EASY_CLASS.inner}`
           );
           if (inner) {
             inner.textContent = "";
             const retryIcon = createRetrySVG();
-            retryIcon.classList.add(Translator.KISS_CLASS.retry);
+            retryIcon.classList.add(Translator.EASY_CLASS.retry);
             retryIcon.addEventListener("click", (e) => {
               e.stopPropagation();
               e.preventDefault();
@@ -1408,7 +1414,7 @@ export class Translator {
           }
         }
       } catch (retryErr) {
-        kissLog("retry icon error: ", retryErr.message);
+        easyLog("retry icon error: ", retryErr.message);
         this.#cleanupDirectTranslations(hostNode);
       }
     }
@@ -1452,7 +1458,7 @@ export class Translator {
             const termValue = this.#termValues[matchedIndex];
 
             return pushReplace(
-              `<i class="${Translator.KISS_CLASS.term}" style="${termsStyle}">${termValue || fullMatch}</i>`
+              `<i class="${Translator.EASY_CLASS.term}" style="${termsStyle}">${termValue || fullMatch}</i>`
             );
           });
         }
@@ -1542,12 +1548,12 @@ export class Translator {
     if (!translatedText) return "";
 
     const { safeTag, openRegex, closeRegex } = this.#placeholderConfig;
-    const restoreAttr = "data-kiss-restore";
+    const restoreAttr = "data-easy-restore";
     let textToParse = translatedText;
     let result = translatedText;
 
     try {
-      // 1. 将所有占位符格式统一替换为 <span data-kiss-restore="index">
+      // 1. 将所有占位符格式统一替换为 <span data-easy-restore="index">
       textToParse = textToParse.replace(
         openRegex,
         `<${safeTag} ${restoreAttr}="$1">`
@@ -1577,7 +1583,7 @@ export class Translator {
 
       result = doc.body.innerHTML;
     } catch (e) {
-      kissLog("DOMParser restore failed, fallback to raw", e);
+      easyLog("DOMParser restore failed, fallback to raw", e);
       // 如果解析失败，result 仍为 translatedText，继续尝试正则还原其他占位符
     }
 
@@ -1618,7 +1624,7 @@ export class Translator {
           Object.assign(args, hookResult);
         }
       } catch (err) {
-        kissLog("transStartHook", err);
+        easyLog("transStartHook", err);
       }
     }
 
@@ -1628,7 +1634,7 @@ export class Translator {
   // 查找指定节点下所有译文节点
   #findTranslationWrappers(parentNode) {
     return parentNode.querySelectorAll(
-      `:scope > .${Translator.KISS_CLASS.warpper}`
+      `:scope > .${Translator.EASY_CLASS.warpper}`
     );
   }
 
@@ -1637,15 +1643,38 @@ export class Translator {
     this.#rootNodes.forEach((root) => this.#cleanupAllTranslations(root));
   }
 
+  #cleanupCEFRAnnotations(rootNode) {
+    if (!rootNode) return 0;
+    return removeCEFRAnnotations(rootNode, {
+      onNodeInserted: (node) => this.#skipMoNodes.add(node),
+    });
+  }
+
+  async #annotateOriginalNodeGroupWithCEFR(nodes, sourceLang, hideOrigin) {
+    try {
+      await annotateNodeGroupWithCEFR({
+        nodes,
+        sourceLang,
+        hideOrigin,
+        cefrSetting: this.#setting.cefrSetting,
+        onNodeInserted: (node) => this.#skipMoNodes.add(node),
+      });
+    } catch (err) {
+      easyLog("cefr annotate error:", err?.message || err);
+    }
+  }
+
   // 清理节点下面所有译文dom
   #cleanupAllTranslations(root) {
+    this.#cleanupCEFRAnnotations(root);
     root
-      .querySelectorAll(`.${Translator.KISS_CLASS.warpper}`)
+      .querySelectorAll(`.${Translator.EASY_CLASS.warpper}`)
       .forEach((el) => this.#removeTranslationElement(el));
   }
 
   // 清理子节点译文dom
   #cleanupDirectTranslations(node) {
+    this.#cleanupCEFRAnnotations(node);
     this.#findTranslationWrappers(node).forEach((el) => {
       this.#removeTranslationElement(el);
     });
@@ -1655,6 +1684,7 @@ export class Translator {
   #removeTranslationElement(el) {
     const parentElement = el.parentElement;
     this.#processedNodes.delete(parentElement);
+    this.#cleanupCEFRAnnotations(parentElement);
 
     // 如果是仅显示译文模式，先恢复原文
     const { nodes, isHide } = this.#translationNodes.get(el) || {};
@@ -1694,17 +1724,19 @@ export class Translator {
   #toggleTranslationOnly(node, transOnly) {
     this.#findTranslationWrappers(node).forEach((el) => {
       const br = el.querySelector(":scope > br");
-      const { nodes } = this.#translationNodes.get(el) || {};
+      const { nodes, sourceLang } = this.#translationNodes.get(el) || {};
       if (transOnly === "true") {
         // 双语变为仅译文
+        this.#cleanupCEFRAnnotations(node);
         if (br) br.hidden = true;
         this.#removeNodes(nodes);
-        this.#translationNodes.set(el, { nodes, isHide: true });
+        this.#translationNodes.set(el, { nodes, isHide: true, sourceLang });
       } else {
         // 仅译文变为双语
         if (br) br.hidden = false;
         this.#restoreOriginal(el, nodes);
-        this.#translationNodes.set(el, { nodes, isHide: false });
+        this.#translationNodes.set(el, { nodes, isHide: false, sourceLang });
+        void this.#annotateOriginalNodeGroupWithCEFR(nodes, sourceLang, false);
       }
     });
   }
@@ -1713,7 +1745,7 @@ export class Translator {
   #updateStyle(node, oldStyle, newStyle) {
     this.#findTranslationWrappers(node).forEach((el) => {
       const inner = el.querySelector(
-        `:scope > .${Translator.KISS_CLASS.inner}`
+        `:scope > .${Translator.EASY_CLASS.inner}`
       );
       inner.classList.remove(this.#textClass[oldStyle]);
       inner.classList.add(this.#textClass[newStyle]);
@@ -1826,7 +1858,7 @@ export class Translator {
       //   injectCss && sendBgMsg(MSG_INJECT_CSS, injectCss);
       // } else {
       //   injectJs &&
-      //     injectInlineJs(injectJs, "kiss-translator-userinit-injector");
+      //     injectInlineJs(injectJs, "easy-translator-userinit-injector");
       //   injectCss && injectInternalCss(injectCss);
       // }
 
@@ -1856,14 +1888,14 @@ export class Translator {
         interpreter.run(injectJs);
       }
     } catch (err) {
-      kissLog("inject js", err);
+      easyLog("inject js", err);
     }
   }
 
   // 移除JS/CSS
   #removeInjector() {
     document
-      .querySelectorAll(`[data-source^="kiss-inject"]`)
+      .querySelectorAll(`[data-source^="easy-inject"]`)
       ?.forEach((el) => el.remove());
   }
 
@@ -1909,7 +1941,7 @@ export class Translator {
       this.#docInfo.title = document.title; // 缓存原标题
       document.title = trText || docInfo.title;
     } catch (err) {
-      kissLog("tanslate title", err);
+      easyLog("tanslate title", err);
     }
   }
 

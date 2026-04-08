@@ -550,7 +550,7 @@ export class InputTranslator {
       this.#config.transApis.find((api) => api.apiSlug === apiSlug) ||
       DEFAULT_API_SETTING;
 
-    const loadingId = "kiss-loading-" + genEventName();
+    const loadingId = "easy-loading-" + genEventName();
 
     try {
       addLoading(node, loadingId);

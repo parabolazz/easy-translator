@@ -8,10 +8,11 @@ import { useI18n } from "../../hooks/I18n";
 import Divider from "@mui/material/Divider";
 import Header from "./Header";
 import { MSG_OPEN_SEPARATE_WINDOW, MSG_TRANS_GETRULE } from "../../config";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import PopupCont from "./PopupCont";
 import TranForm from "../Selection/TranForm";
 import { useSetting } from "../../hooks/Setting";
+import { openOptionsHash } from "../../libs/optionsPage";
 
 function Trantab() {
   const [text, setText] = useState("");
@@ -53,6 +54,10 @@ export default function Popup() {
     browser?.runtime.openOptionsPage();
   }, []);
 
+  const handleOpenCEFR = useCallback(() => {
+    openOptionsHash();
+  }, []);
+
   useEffect(() => {
     (async () => {
       try {
@@ -68,7 +73,7 @@ export default function Popup() {
           setSetting(res.setting);
         }
       } catch (err) {
-        kissLog("query rule", err);
+        easyLog("query rule", err);
       }
     })();
   }, []);
@@ -104,6 +109,7 @@ export default function Popup() {
             setRule={setRule}
             setSetting={setSetting}
             handleOpenSetting={handleOpenSetting}
+            handleOpenCEFR={handleOpenCEFR}
           />
         ) : (
           <Stack
@@ -116,7 +122,7 @@ export default function Popup() {
               variant="text"
               onClick={() => {
                 window.open(
-                  "https://chromewebstore.google.com/detail/kiss-translator/bdiifdefkgmcblbcghdlonllpjhhjgof/reviews",
+                  "https://chromewebstore.google.com/detail/easy-translator/bdiifdefkgmcblbcghdlonllpjhhjgof/reviews",
                   "_blank"
                 );
               }}
@@ -127,7 +133,7 @@ export default function Popup() {
               variant="text"
               onClick={() => {
                 window.open(
-                  "https://github.com/fishjar/kiss-translator#%E8%B5%9E%E8%B5%8F",
+                  "https://github.com/fishjar/easy-translator#%E8%B5%9E%E8%B5%8F",
                   "_blank"
                 );
               }}
@@ -136,6 +142,9 @@ export default function Popup() {
             </Button>
             <Button variant="text" onClick={handleOpenSetting}>
               {i18n("setting")}
+            </Button>
+            <Button variant="text" onClick={handleOpenCEFR}>
+              {i18n("cefr_setting_nav", "CEFR")}
             </Button>
           </Stack>
         )}

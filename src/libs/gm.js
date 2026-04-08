@@ -47,7 +47,7 @@ export const adaptScript = (ping) => {
       }, timeout);
     });
 
-  window.KISS_GM = {
+  window.EASY_GM = {
     fetch: (input, init) => promiseGM(MSG_GM_xmlHttpRequest, { input, init }),
     setValue: (key, val) => promiseGM(MSG_GM_setValue, { key, val }),
     getValue: (key) => promiseGM(MSG_GM_getValue, { key }),

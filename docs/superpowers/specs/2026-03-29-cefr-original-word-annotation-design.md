@@ -2,7 +2,7 @@
 
 ## 背景
 
-Kiss Translator 目前已经支持整页双语翻译：保留原文内容，并在每组被翻译的节点后面插入译文 wrapper。仓库里也已经有 CEFR 词典资源、CEFR 设置页原型，以及一个针对“英文译文结果”做标注的草稿钩子。但这个原型和目标产品行为并不一致。
+Easy Translator 目前已经支持整页双语翻译：保留原文内容，并在每组被翻译的节点后面插入译文 wrapper。仓库里也已经有 CEFR 词典资源、CEFR 设置页原型，以及一个针对“英文译文结果”做标注的草稿钩子。但这个原型和目标产品行为并不一致。
 
 本次目标功能是：
 
@@ -76,7 +76,7 @@ Kiss Translator 目前已经支持整页双语翻译：保留原文内容，并�
 
 ### 整体架构
 
-当前 [src/libs/translator.js](/Users/kaen/Projects/kiss-translator/src/libs/translator.js) 中的整页翻译流程继续负责：
+当前 [src/libs/translator.js](/Users/kaen/Projects/easy-translator/src/libs/translator.js) 中的整页翻译流程继续负责：
 
 1. 收集文本节点并组成待翻译节点组
 2. 序列化文本并发给翻译服务
@@ -105,16 +105,16 @@ CEFR 标注作为“翻译成功后的增强步骤”插入到该流程之后，
 每个被标注的单词应渲染为：
 
 ```html
-<span class="kiss-cefr-word" data-kiss-cefr="1" data-word="ubiquitous">
+<span class="easy-cefr-word" data-easy-cefr="1" data-word="ubiquitous">
   ubiquitous
-  <span class="kiss-cefr-gloss" aria-hidden="true">普遍的</span>
+  <span class="easy-cefr-gloss" aria-hidden="true">普遍的</span>
 </span>
 ```
 
 关键样式要求：
 
-- `kiss-cefr-word` 使用 `position: relative` 和 `display: inline-block`
-- `kiss-cefr-gloss` 使用 `position: absolute`，定位在单词上方
+- `easy-cefr-word` 使用 `position: relative` 和 `display: inline-block`
+- `easy-cefr-gloss` 使用 `position: absolute`，定位在单词上方
 - 释义层使用 `pointer-events: none`
 - 释义层使用 `white-space: nowrap`
 - 释义层有小幅偏移和适度 `z-index`，保证可读但不过度遮挡周边内容
@@ -124,7 +124,7 @@ CEFR 标注作为“翻译成功后的增强步骤”插入到该流程之后，
 
 ### 与 Translator 的集成
 
-[src/libs/cefr.js](/Users/kaen/Projects/kiss-translator/src/libs/cefr.js) 中现有的 `maybeAnnotateTranslatedText(...)` 是围绕“英文译文输出”设计的，不再适合作为本功能的主实现。CEFR 模块应改为面向原文 DOM 标注的辅助能力，例如：
+[src/libs/cefr.js](/Users/kaen/Projects/easy-translator/src/libs/cefr.js) 中现有的 `maybeAnnotateTranslatedText(...)` 是围绕“英文译文输出”设计的，不再适合作为本功能的主实现。CEFR 模块应改为面向原文 DOM 标注的辅助能力，例如：
 
 - 加载并缓存 CEFR 词典
 - 将 CEFR 等级映射为数值分数
@@ -132,7 +132,7 @@ CEFR 标注作为“翻译成功后的增强步骤”插入到该流程之后，
 - 将文本节点或片段改写成带释义层的 DOM 包装
 - 可靠地移除或还原 CEFR 包装节点
 
-[src/libs/translator.js](/Users/kaen/Projects/kiss-translator/src/libs/translator.js) 在翻译成功后调用新的 DOM 标注辅助函数，并登记足够的清理信息，以便在译文被重建或移除时同步清理 CEFR 标注。
+[src/libs/translator.js](/Users/kaen/Projects/easy-translator/src/libs/translator.js) 在翻译成功后调用新的 DOM 标注辅助函数，并登记足够的清理信息，以便在译文被重建或移除时同步清理 CEFR 标注。
 
 ### 清理与生命周期
 
@@ -149,7 +149,7 @@ CEFR 标注必须作为翻译生命周期的一部分来管理：
 
 ### 设置页
 
-[src/views/Options/CEFRSetting.js](/Users/kaen/Projects/kiss-translator/src/views/Options/CEFRSetting.js) 需要从当前原型演进成完整的 CEFR 工作流页面，并覆盖 3 个状态：
+[src/views/Options/CEFRSetting.js](/Users/kaen/Projects/easy-translator/src/views/Options/CEFRSetting.js) 需要从当前原型演进成完整的 CEFR 工作流页面，并覆盖 3 个状态：
 
 1. onboarding 状态
    - 首次安装后或从未完成测级时显示
@@ -166,7 +166,7 @@ CEFR 标注必须作为翻译生命周期的一部分来管理：
 
 ### Popup
 
-[src/views/Popup/PopupCont.js](/Users/kaen/Projects/kiss-translator/src/views/Popup/PopupCont.js) 顶部加入一个紧凑型 CEFR 卡片：
+[src/views/Popup/PopupCont.js](/Users/kaen/Projects/easy-translator/src/views/Popup/PopupCont.js) 顶部加入一个紧凑型 CEFR 卡片：
 
 - 如果尚未完成测试，显示跳转到 CEFR 设置页的 CTA
 - 如果已完成测试，显示当前等级，并提供去设置页重新测试或调整的入口
@@ -196,7 +196,7 @@ CEFR 标注必须作为翻译生命周期的一部分来管理：
 
 ### 单元测试
 
-补充或改造 [src/libs/cefr.test.js](/Users/kaen/Projects/kiss-translator/src/libs/cefr.test.js)，覆盖以下行为：
+补充或改造 [src/libs/cefr.test.js](/Users/kaen/Projects/easy-translator/src/libs/cefr.test.js)，覆盖以下行为：
 
 - 非英文原文时跳过标注
 - 小于或等于用户等级的词不标注
@@ -206,7 +206,7 @@ CEFR 标注必须作为翻译生命周期的一部分来管理：
 
 ### Translator 集成测试
 
-增加围绕 [src/libs/translator.js](/Users/kaen/Projects/kiss-translator/src/libs/translator.js) 的集成覆盖，确认：
+增加围绕 [src/libs/translator.js](/Users/kaen/Projects/easy-translator/src/libs/translator.js) 的集成覆盖，确认：
 
 - 译文 wrapper 仍然正常生成
 - 满足条件时，英文原文单词会收到 CEFR 释义包装
@@ -233,11 +233,11 @@ CEFR 标注必须作为翻译生命周期的一部分来管理：
 
 预计主要改动点如下：
 
-- [src/background.js](/Users/kaen/Projects/kiss-translator/src/background.js)：处理首次安装时的 CEFR 引导
-- [src/config/setting.js](/Users/kaen/Projects/kiss-translator/src/config/setting.js)：扩展 CEFR 状态模型
-- [src/views/Options/CEFRSetting.js](/Users/kaen/Projects/kiss-translator/src/views/Options/CEFRSetting.js)：实现 onboarding、重测和手动改级 UI
-- [src/views/Popup/PopupCont.js](/Users/kaen/Projects/kiss-translator/src/views/Popup/PopupCont.js)：增加持久提醒入口
-- [src/libs/cefr.js](/Users/kaen/Projects/kiss-translator/src/libs/cefr.js)：提供面向原文 DOM 的标注与清理辅助函数
-- [src/libs/translator.js](/Users/kaen/Projects/kiss-translator/src/libs/translator.js)：在翻译成功后接入 CEFR 原文标注，并纳入现有清理生命周期
+- [src/background.js](/Users/kaen/Projects/easy-translator/src/background.js)：处理首次安装时的 CEFR 引导
+- [src/config/setting.js](/Users/kaen/Projects/easy-translator/src/config/setting.js)：扩展 CEFR 状态模型
+- [src/views/Options/CEFRSetting.js](/Users/kaen/Projects/easy-translator/src/views/Options/CEFRSetting.js)：实现 onboarding、重测和手动改级 UI
+- [src/views/Popup/PopupCont.js](/Users/kaen/Projects/easy-translator/src/views/Popup/PopupCont.js)：增加持久提醒入口
+- [src/libs/cefr.js](/Users/kaen/Projects/easy-translator/src/libs/cefr.js)：提供面向原文 DOM 的标注与清理辅助函数
+- [src/libs/translator.js](/Users/kaen/Projects/easy-translator/src/libs/translator.js)：在翻译成功后接入 CEFR 原文标注，并纳入现有清理生命周期
 
 这个设计方案的核心是：复用仓库中已经存在的 CEFR 原型基础，但把方向从“标注英文译文”调整为“增强英文原文 DOM”，并严格满足“不影响现有双语翻译”和“不影响原文文档流”这两个关键约束。

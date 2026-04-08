@@ -16,7 +16,7 @@ import Button from "@mui/material/Button";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import Alert from "@mui/material/Alert";
 import { isValidWord } from "../../libs/utils";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import { useConfirm } from "../../hooks/Confirm";
 import { useSetting } from "../../hooks/Setting";
 import { dictHandlers } from "../Selection/DictHandler";
@@ -46,7 +46,7 @@ function FavAccordion({ word, index, createdAt, timestamp }) {
       // 发送消息到内容脚本，让视频跳转到指定时间
       window.postMessage(
         {
-          type: "KISS_TRANSLATOR_JUMP_TO_TIME",
+          type: "EASY_TRANSLATOR_JUMP_TO_TIME",
           time: timestamp,
         },
         "*"
@@ -103,7 +103,7 @@ export default function FavWords() {
         .filter(isValidWord);
       mergeWords(newWords);
     } catch (err) {
-      kissLog("import rules", err);
+      easyLog("import rules", err);
     }
   };
 
@@ -327,7 +327,7 @@ export default function FavWords() {
           .join("\n");
         tranList.push([title, tran].join("\n"));
       } catch (err) {
-        kissLog("export translation", err);
+        easyLog("export translation", err);
       }
     }
 
@@ -356,34 +356,34 @@ export default function FavWords() {
           <DownloadButton
             handleData={() => wordList.join("\n")}
             text={i18n("export")}
-            fileName={`kiss-words_${Date.now()}.txt`}
+            fileName={`easy-words_${Date.now()}.txt`}
           />
 
           {/* 导出为 TXT 格式 */}
           <DownloadButton
             handleData={handleExportTxt}
             text={i18n("export") + " (TXT)"}
-            fileName={`kiss-words_${Date.now()}.txt`}
+            fileName={`easy-words_${Date.now()}.txt`}
           />
 
           {/* 导出为 CSV 格式 */}
           <DownloadButton
             handleData={handleExportCsv}
             text={i18n("export") + " (CSV)"}
-            fileName={`kiss-words_${Date.now()}.csv`}
+            fileName={`easy-words_${Date.now()}.csv`}
           />
 
           {/* 导出为 Markdown 格式 */}
           <DownloadButton
             handleData={handleExportMd}
             text={i18n("export") + " (MD)"}
-            fileName={`kiss-words_${Date.now()}.md`}
+            fileName={`easy-words_${Date.now()}.md`}
           />
 
           <DownloadButton
             handleData={handleTranslation}
             text={i18n("export_translation")}
-            fileName={`kiss-words_${Date.now()}.md`}
+            fileName={`easy-words_${Date.now()}.md`}
           />
           <Button
             size="small"

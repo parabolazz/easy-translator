@@ -1,7 +1,7 @@
 {
-  "name": "kiss-translator",
+  "name": "easy-translator",
   "description": "A minimalist bilingual translation Extension & Greasemonkey Script",
-  "version": "2.0.20",
+  "version": "0.0.1",
   "author": "Gabe<yugang2002@gmail.com>",
   "private": true,
   "dependencies": {
@@ -32,6 +32,7 @@
     "version:major": "zx src/scripts/update-version.mjs major",
     "version:set": "zx src/scripts/update-version.mjs set",
     "build:chrome": "zx src/scripts/build-task.mjs --target=chrome",
+    "build:cefr-dict": "node src/scripts/build-cefr-dict.mjs",
     "build:edge": "zx src/scripts/build-task.mjs --target=edge",
     "build:safari-output": "zx src/scripts/build-task.mjs --target=safari",
     "build:thunderbird": "zx src/scripts/build-task.mjs --target=thunderbird",
@@ -82,8 +83,12 @@
     "cross-env": "^7.0.3",
     "dotenv": "^17.2.1",
     "find-up": "^7.0.0",
+    "html-webpack-plugin": "^5.6.6",
+    "mini-css-extract-plugin": "^2.10.2",
     "prettier": "3.6.2",
     "react-app-rewired": "^2.2.1",
+    "terser-webpack-plugin": "^5.4.0",
+    "webpack-manifest-plugin": "^6.0.1",
     "zx": "^8.8.1"
   }
 }

@@ -94,8 +94,8 @@ export default function Navigator(props) {
       icon: <EventNoteIcon />,
     },
     {
-      id: "cefr",
-      label: "CEFR Vocab",
+      id: "cefr_setting",
+      label: i18n("cefr_setting_nav", "CEFR"),
       url: "/cefr",
       icon: <SchoolIcon />,
     },
@@ -107,6 +107,7 @@ export default function Navigator(props) {
     },
     { id: "about", label: i18n("about"), url: "/about", icon: <InfoIcon /> },
   ];
+
   return (
     <Drawer {...props}>
       <Toolbar variant="dense" />

@@ -1,11 +1,11 @@
 import { useEffect, useCallback } from "react";
 import { shortcutRegister } from "../libs/shortcut";
 import { isGm, isExt } from "../libs/client";
-import { kissLog } from "../libs/log";
+import { easyLog } from "../libs/log";
 import { useLangMap } from "./I18n";
 import {
   MSG_OPEN_TRANBOX,
-  EVENT_KISS_INNER,
+  EVENT_EASY_INNER,
   DEFAULT_TRANBOX_SHORTCUT,
 } from "../config";
 
@@ -47,9 +47,9 @@ export default function useTranboxShortcuts({
       }
     };
 
-    document.addEventListener(EVENT_KISS_INNER, handleStatusUpdate);
+    document.addEventListener(EVENT_EASY_INNER, handleStatusUpdate);
     return () => {
-      document.removeEventListener(EVENT_KISS_INNER, handleStatusUpdate);
+      document.removeEventListener(EVENT_EASY_INNER, handleStatusUpdate);
     };
   }, [handleToggle]);
 
@@ -79,7 +79,7 @@ export default function useTranboxShortcuts({
         });
       };
     } catch (err) {
-      kissLog("registerMenuCommand", err);
+      easyLog("registerMenuCommand", err);
     }
   }, [handleToggleTranbox, contextMenuType, langMap]);
 }

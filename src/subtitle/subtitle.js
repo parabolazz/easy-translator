@@ -18,7 +18,7 @@ export function runSubtitle({ href, setting }) {
 
     const provider = providers.find((item) => isMatch(href, item.pattern));
     if (provider) {
-      const id = "kiss-translator-inject-subtitle-js";
+      const id = "easy-translator-inject-subtitle-js";
       injectJs(INJECTOR.subtitle, id);
 
       const apiSetting =

@@ -69,7 +69,7 @@
 No worktree directory found. Where should I create worktrees?
 
 1. .worktrees/ (project-local, hidden)
-2. ~/.config/superpowers/worktrees/kiss-translator/ (global location)
+2. ~/.config/superpowers/worktrees/easy-translator/ (global location)
 
 Which would you prefer?
 ```
@@ -100,9 +100,9 @@ cd .worktrees/cefr-original-word-annotation
 如果用户选全局 worktree，运行：
 
 ```bash
-mkdir -p ~/.config/superpowers/worktrees/kiss-translator
-git worktree add ~/.config/superpowers/worktrees/kiss-translator/cefr-original-word-annotation -b codex/cefr-original-word-annotation
-cd ~/.config/superpowers/worktrees/kiss-translator/cefr-original-word-annotation
+mkdir -p ~/.config/superpowers/worktrees/easy-translator
+git worktree add ~/.config/superpowers/worktrees/easy-translator/cefr-original-word-annotation -b codex/cefr-original-word-annotation
+cd ~/.config/superpowers/worktrees/easy-translator/cefr-original-word-annotation
 ```
 
 Expected: 新分支 `codex/cefr-original-word-annotation` 创建成功，工作目录干净。
@@ -793,8 +793,8 @@ describe("annotateNodeGroupWithCEFR", () => {
           : null,
     });
 
-    expect(root.querySelector(".kiss-cefr-word")).not.toBeNull();
-    expect(root.querySelector(".kiss-cefr-gloss")).toHaveTextContent("普遍的");
+    expect(root.querySelector(".easy-cefr-word")).not.toBeNull();
+    expect(root.querySelector(".easy-cefr-gloss")).toHaveTextContent("普遍的");
     expect(root.textContent).toContain("ubiquitous");
   });
 
@@ -819,7 +819,7 @@ describe("annotateNodeGroupWithCEFR", () => {
     });
 
     expect(changed).toBe(false);
-    expect(root.querySelector(".kiss-cefr-word")).toBeNull();
+    expect(root.querySelector(".easy-cefr-word")).toBeNull();
   });
 });
 
@@ -846,7 +846,7 @@ describe("removeCEFRAnnotations", () => {
     removeCEFRAnnotations(root);
     removeCEFRAnnotations(root);
 
-    expect(root.querySelector(".kiss-cefr-word")).toBeNull();
+    expect(root.querySelector(".easy-cefr-word")).toBeNull();
     expect(root.textContent).toBe("The ubiquitous robot helps.");
   });
 });
@@ -883,9 +883,9 @@ export const CEFR_LEVEL_SCORES = {
   C2: 6,
 };
 
-export const CEFR_WORD_CLASS = "kiss-cefr-word";
-export const CEFR_GLOSS_CLASS = "kiss-cefr-gloss";
-export const CEFR_ATTR = "data-kiss-cefr";
+export const CEFR_WORD_CLASS = "easy-cefr-word";
+export const CEFR_GLOSS_CLASS = "easy-cefr-gloss";
+export const CEFR_ATTR = "data-easy-cefr";
 export const CEFR_WORD_REGEX = /\b[a-zA-Z]+\b/g;
 
 export function isEnglishLang(lang = "") {
@@ -1049,18 +1049,18 @@ git commit -m "feat: add CEFR original-word annotation helpers"
 test("removeCEFRAnnotations keeps sibling translation wrappers untouched", () => {
   document.body.innerHTML = `
     <div id="root">
-      <span class="kiss-cefr-word" data-kiss-cefr="1" data-word="ubiquitous">
+      <span class="easy-cefr-word" data-easy-cefr="1" data-word="ubiquitous">
         ubiquitous
-        <span class="kiss-cefr-gloss" aria-hidden="true">普遍的</span>
+        <span class="easy-cefr-gloss" aria-hidden="true">普遍的</span>
       </span>
-      <kiss-translator class="kiss-translator-wrapper">普遍存在的</kiss-translator>
+      <easy-translator class="easy-translator-wrapper">普遍存在的</easy-translator>
     </div>
   `;
 
   const root = document.getElementById("root");
   removeCEFRAnnotations(root);
 
-  expect(root.querySelector(".kiss-translator-wrapper")).not.toBeNull();
+  expect(root.querySelector(".easy-translator-wrapper")).not.toBeNull();
   expect(root.textContent).toContain("普遍存在的");
 });
 ```

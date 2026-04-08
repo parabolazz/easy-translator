@@ -31,7 +31,7 @@ function runSettingPage() {
     // window.eval(`(${injectScript})("${ping}")`); // eslint-disable-line
     injectInlineJs(
       `(${injectScript})("${ping}")`,
-      "kiss-translator-options-injector"
+      "easy-translator-options-injector"
     );
   }
 }
@@ -41,7 +41,7 @@ function runSettingPage() {
  * @param {*} message
  */
 function showErr(message) {
-  const bannerId = "KISS-Translator-Message";
+  const bannerId = "Easy-Translator-Message";
   const existingBanner = document.getElementById(bannerId);
   if (existingBanner) {
     existingBanner.remove();
@@ -78,7 +78,7 @@ function showErr(message) {
     fontWeight: "bold",
   });
 
-  const messageText = document.createTextNode(`KISS-Translator: ${message}`);
+  const messageText = document.createTextNode(`Easy-Translator: ${message}`);
   banner.appendChild(messageText);
   banner.appendChild(closeButton);
 
@@ -204,7 +204,7 @@ export async function run(isUserscript = false) {
       trySyncAllSubRules(setting);
     }
   } catch (err) {
-    console.error("[KISS-Translator]", err);
+    console.error("[Easy-Translator]", err);
     showErr(err.message);
   }
 }

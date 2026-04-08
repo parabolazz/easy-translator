@@ -56,7 +56,7 @@ import {
   detectStreamFormat,
   getStreamDelta,
 } from "../libs/stream";
-import { kissLog } from "../libs/log";
+import { easyLog } from "../libs/log";
 import { fetchData, fetchStream } from "../libs/fetch";
 import { getMsgHistory } from "./history";
 import { parseBilingualVtt } from "../subtitle/vtt";
@@ -198,7 +198,7 @@ const parseAIRes = (raw, useBatchFetch = true) => {
   //     ]);
   //   }
   // } catch (err) {
-  //   kissLog("parse AI Res", err);
+  //   easyLog("parse AI Res", err);
   // }
   // return [];
 
@@ -275,7 +275,7 @@ const parseSTRes = (raw) => {
       return data;
     }
   } catch (err) {
-    kissLog("parse AI Res: subtitle", err);
+    easyLog("parse AI Res: subtitle", err);
   }
 
   return [];
@@ -886,7 +886,7 @@ export const genTransReq = async ({ reqHook, ...args }) => {
         return genInit(hookResult);
       }
     } catch (err) {
-      kissLog("run req hook", err);
+      easyLog("run req hook", err);
       throw new Error(`Request hook error: ${err.message}`);
     }
   }
@@ -943,7 +943,7 @@ export const parseTransRes = async (
         return hookResult;
       }
     } catch (err) {
-      kissLog("run res hook", err);
+      easyLog("run res hook", err);
       throw new Error(`Response hook error: ${err.message}`);
     }
   }
@@ -1217,7 +1217,7 @@ async function* handleTranslateStreamInternal(
       jsonParser.end();
     }
   } catch (error) {
-    kissLog("handleTranslateStream error", error);
+    easyLog("handleTranslateStream error", error);
     throw error;
   }
 
@@ -1300,7 +1300,7 @@ export const handleSubtitle = async ({ events, from, to, apiSetting }) => {
     httpTimeout,
   });
   if (!res) {
-    kissLog("subtitle got empty response");
+    easyLog("subtitle got empty response");
     return [];
   }
 

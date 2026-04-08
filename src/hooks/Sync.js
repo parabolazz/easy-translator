@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from "react";
-import { STOKEY_SYNC, DEFAULT_SYNC } from "../config";
+import { useCallback, useEffect, useMemo } from "react";
+import { STOKEY_SYNC, DEFAULT_SYNC, normalizeSync } from "../config";
 import { useStorage } from "./Storage";
 
 /**
@@ -7,8 +7,22 @@ import { useStorage } from "./Storage";
  * @returns
  */
 export function useSync() {
-  const { data, update, reload } = useStorage(STOKEY_SYNC, DEFAULT_SYNC);
-  return { sync: data, updateSync: update, reloadSync: reload };
+  const {
+    data,
+    save,
+    update,
+    reload,
+    isLoading,
+  } = useStorage(STOKEY_SYNC, DEFAULT_SYNC);
+  const sync = useMemo(() => normalizeSync(data), [data]);
+
+  useEffect(() => {
+    if (isLoading || !data) return;
+    if (JSON.stringify(data) === JSON.stringify(sync)) return;
+    save(sync);
+  }, [data, isLoading, save, sync]);
+
+  return { sync, updateSync: update, reloadSync: reload };
 }
 
 /**

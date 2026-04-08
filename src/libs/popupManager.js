@@ -1,5 +1,5 @@
 import ShadowDomManager from "./shadowDomManager";
-import { APP_CONSTS, EVENT_KISS_INNER, MSG_POPUP_TOGGLE } from "../config";
+import { APP_CONSTS, EVENT_EASY_INNER, MSG_POPUP_TOGGLE } from "../config";
 import Action from "../views/Action";
 
 export class PopupManager extends ShadowDomManager {
@@ -15,7 +15,7 @@ export class PopupManager extends ShadowDomManager {
   toggle(props) {
     if (this.isVisible) {
       document.dispatchEvent(
-        new CustomEvent(EVENT_KISS_INNER, {
+        new CustomEvent(EVENT_EASY_INNER, {
           detail: { action: MSG_POPUP_TOGGLE },
         })
       );

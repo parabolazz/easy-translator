@@ -24,7 +24,7 @@ import DictCont from "./DictCont";
 import SugCont from "./SugCont";
 import CopyBtn from "./CopyBtn";
 import { isValidWord } from "../../libs/utils";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import { tryDetectLang } from "../../libs/detect";
 
 export default function TranForm({
@@ -68,7 +68,7 @@ export default function TranForm({
 
   useEffect(() => {
     if (isValidWord(text)) {
-      const event = new CustomEvent("kiss-add-word", {
+      const event = new CustomEvent("easy-add-word", {
         detail: { word: text },
       });
       document.dispatchEvent(event);
@@ -99,7 +99,7 @@ export default function TranForm({
           setDeLang(deLang);
         }
       } catch (err) {
-        kissLog("tranbox: detect lang", err);
+        easyLog("tranbox: detect lang", err);
       } finally {
         setDeLoading(false);
       }

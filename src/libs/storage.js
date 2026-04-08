@@ -10,44 +10,90 @@ import {
   STOKEY_MSAUTH,
   STOKEY_BDAUTH,
   STOKEY_RULESCACHE_PREFIX,
+  LEGACY_STORAGE_KEY_ALIASES,
+  LEGACY_STOKEY_RULESCACHE_PREFIX,
   DEFAULT_SETTING,
+  normalizeSetting,
+  normalizeCEFRSetting,
+  normalizeSync,
   DEFAULT_RULES,
   DEFAULT_SYNC,
   BUILTIN_RULES,
 } from "../config";
 import { isExt, isGm } from "./client";
 import { browser } from "./browser";
-import { kissLog } from "./log";
+import { easyLog } from "./log";
 import { debounce } from "./utils";
+
+const getLegacyKeys = (key) => {
+  const exactKeys = LEGACY_STORAGE_KEY_ALIASES[key] || [];
+
+  if (key.startsWith(STOKEY_RULESCACHE_PREFIX)) {
+    const suffix = key.slice(STOKEY_RULESCACHE_PREFIX.length);
+    return [...exactKeys, `${LEGACY_STOKEY_RULESCACHE_PREFIX}${suffix}`];
+  }
+
+  return exactKeys;
+};
+
+const getGMStorage = () => window.EASY_GM || window.KISS_GM || GM;
+
+const isMissingValue = (value) => value === null || value === undefined;
+
+async function readRaw(key) {
+  if (isExt) {
+    const val = await browser.storage.local.get([key]);
+    return val[key];
+  } else if (isGm) {
+    return await getGMStorage().getValue(key);
+  }
+  return window.localStorage.getItem(key);
+}
+
+async function readWithLegacyFallback(key) {
+  const value = await readRaw(key);
+  if (!isMissingValue(value)) {
+    return { value, sourceKey: key };
+  }
+
+  for (const legacyKey of getLegacyKeys(key)) {
+    const legacyValue = await readRaw(legacyKey);
+    if (!isMissingValue(legacyValue)) {
+      return { value: legacyValue, sourceKey: legacyKey };
+    }
+  }
+
+  return { value: undefined, sourceKey: key };
+}
 
 async function set(key, val) {
   if (isExt) {
     await browser.storage.local.set({ [key]: val });
   } else if (isGm) {
-    await (window.KISS_GM || GM).setValue(key, val);
+    await getGMStorage().setValue(key, val);
   } else {
     window.localStorage.setItem(key, val);
   }
 }
 
 async function get(key) {
-  if (isExt) {
-    const val = await browser.storage.local.get([key]);
-    return val[key];
-  } else if (isGm) {
-    const val = await (window.KISS_GM || GM).getValue(key);
-    return val;
-  }
-  return window.localStorage.getItem(key);
+  return (await readWithLegacyFallback(key)).value;
 }
 
 async function del(key) {
   if (isExt) {
-    await browser.storage.local.remove([key]);
+    await browser.storage.local.remove([key, ...getLegacyKeys(key)]);
   } else if (isGm) {
-    await (window.KISS_GM || GM).deleteValue(key);
+    const storage = getGMStorage();
+    await storage.deleteValue(key);
+    for (const legacyKey of getLegacyKeys(key)) {
+      await storage.deleteValue(legacyKey);
+    }
   } else {
     window.localStorage.removeItem(key);
+    getLegacyKeys(key).forEach((legacyKey) => {
+      window.localStorage.removeItem(legacyKey);
+    });
   }
 }
 
@@ -62,12 +108,16 @@ async function trySetObj(key, obj) {
 }
 
 async function getObj(key) {
-  const val = await get(key);
+  const { value: val, sourceKey } = await readWithLegacyFallback(key);
   if (val === null || val === undefined) return null;
   try {
-    return JSON.parse(val);
+    const parsed = JSON.parse(val);
+    if (sourceKey !== key) {
+      await set(key, val);
+    }
+    return parsed;
   } catch (err) {
-    kissLog("parse json in storage err: ", key);
+    easyLog("parse json in storage err: ", key);
   }
   return null;
 }
@@ -96,10 +146,24 @@ export const storage = {
  */
 export const getSetting = () => getObj(STOKEY_SETTING);
 export const getSettingOld = () => getObj(STOKEY_SETTING_OLD);
-export const getSettingWithDefault = async () => ({
-  ...DEFAULT_SETTING,
-  ...((await getSetting()) || {}),
-});
+export const getSettingWithDefault = async () => {
+  const setting = await getSetting();
+  const normalizedSetting = normalizeSetting(setting);
+
+  if (setting && typeof setting === "object") {
+    const originalSetting = JSON.stringify({
+      ...setting,
+      cefrSetting: normalizeCEFRSetting(setting.cefrSetting),
+    });
+    const nextSetting = JSON.stringify(normalizedSetting);
+
+    if (originalSetting !== nextSetting) {
+      await setSetting(normalizedSetting);
+    }
+  }
+
+  return normalizedSetting;
+};
 export const setSetting = (val) => setObj(STOKEY_SETTING, val);
 export const putSetting = (obj) => putObj(STOKEY_SETTING, obj);
 
@@ -147,7 +211,16 @@ export const debouncePutTranBox = debounce(putTranBox, 300);
  * 数据同步
  */
 export const getSync = () => getObj(STOKEY_SYNC);
-export const getSyncWithDefault = async () => (await getSync()) || DEFAULT_SYNC;
+export const getSyncWithDefault = async () => {
+  const sync = await getSync();
+  const normalizedSync = normalizeSync(sync);
+
+  if (sync && JSON.stringify(sync) !== JSON.stringify(normalizedSync)) {
+    await setObj(STOKEY_SYNC, normalizedSync);
+  }
+
+  return normalizedSync || DEFAULT_SYNC;
+};
 export const putSync = (obj) => putObj(STOKEY_SYNC, obj);
 export const putSyncMeta = async (key) => {
   const { syncMeta = {} } = await getSyncWithDefault();
@@ -181,6 +254,6 @@ export const tryInitDefaultData = async () => {
       BUILTIN_RULES
     );
   } catch (err) {
-    kissLog("init default", err);
+    easyLog("init default", err);
   }
 };

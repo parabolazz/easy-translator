@@ -1,4 +1,4 @@
-import { kissLog, logger } from "./log";
+import { easyLog, logger } from "./log";
 
 /**
  * Chrome 浏览器内置翻译
@@ -12,7 +12,7 @@ class ChromeTranslator {
   }
 
   #defaultProgressHandler(type, progress) {
-    kissLog(`Downloading ${type} model: ${progress}%`);
+    easyLog(`Downloading ${type} model: ${progress}%`);
   }
 
   #getDetectorPromise() {
@@ -105,7 +105,7 @@ class ChromeTranslator {
 
       return [detectedLanguage, ""];
     } catch (error) {
-      kissLog("detectLanguage", error, `(${text})`);
+      easyLog("detectLanguage", error, `(${text})`);
       return ["", error.message];
     }
   }
@@ -144,7 +144,7 @@ class ChromeTranslator {
 
       return [translatedText, finalSourceLanguage, ""];
     } catch (error) {
-      kissLog("translateText", error, `(${text})`);
+      easyLog("translateText", error, `(${text})`);
 
       if (
         error &&

@@ -24,9 +24,10 @@ import {
 } from "../../config";
 import { saveRule } from "../../libs/rules";
 import { tryClearCaches } from "../../libs/cache";
-import { kissLog } from "../../libs/log";
+import { easyLog } from "../../libs/log";
 import { getDomainOptions, truncateMiddle } from "../../libs/url";
 import { useAllTextStyles } from "../../hooks/CustomStyles";
+import CEFRPromptCard from "./CEFRPromptCard";
 
 export default function PopupCont({
   rule,
@@ -34,6 +35,7 @@ export default function PopupCont({
   setRule,
   setSetting,
   handleOpenSetting,
+  handleOpenCEFR,
   processActions,
   isContent = false,
 }) {
@@ -54,7 +56,7 @@ export default function PopupCont({
         processActions({ action: MSG_TRANS_TOGGLE });
       }
     } catch (err) {
-      kissLog("toggle trans", err);
+      easyLog("toggle trans", err);
     }
   };
 
@@ -71,7 +73,7 @@ export default function PopupCont({
         processActions({ action: MSG_TRANSBOX_TOGGLE });
       }
     } catch (err) {
-      kissLog("toggle transbox", err);
+      easyLog("toggle transbox", err);
     }
   };
 
@@ -91,7 +93,7 @@ export default function PopupCont({
         processActions({ action: MSG_MOUSEHOVER_TOGGLE });
       }
     } catch (err) {
-      kissLog("toggle mousehover", err);
+      easyLog("toggle mousehover", err);
     }
   };
 
@@ -111,7 +113,7 @@ export default function PopupCont({
         processActions({ action: MSG_TRANSINPUT_TOGGLE });
       }
     } catch (err) {
-      kissLog("toggle inputtrans", err);
+      easyLog("toggle inputtrans", err);
     }
   };
 
@@ -129,7 +131,7 @@ export default function PopupCont({
         processActions({ action: MSG_TRANS_PUTRULE, args: { [name]: value } });
       }
     } catch (err) {
-      kissLog("update rule", err);
+      easyLog("update rule", err);
     }
   };
 
@@ -154,7 +156,7 @@ export default function PopupCont({
         message: `${i18n("save_rule")}: ${selectedDomain}`,
       });
     } catch (err) {
-      kissLog("save rule", err);
+      easyLog("save rule", err);
     }
   };
 
@@ -177,7 +179,7 @@ export default function PopupCont({
           }
         }
       } catch (err) {
-        kissLog("get domain options", err);
+        easyLog("get domain options", err);
       }
     })();
   }, [isContent]);
@@ -201,7 +203,7 @@ export default function PopupCont({
         }
         setCommands(commands);
       } catch (err) {
-        kissLog("query cmds", err);
+        easyLog("query cmds", err);
       }
     })();
   }, [setting.shortcuts]);
@@ -237,6 +239,11 @@ export default function PopupCont({
 
   return (
     <Stack sx={{ p: 2 }} spacing={2}>
+      <CEFRPromptCard
+        cefrSetting={setting?.cefrSetting}
+        onOpenCEFR={handleOpenCEFR}
+      />
+
       <Grid container columns={12} spacing={1}>
         <Grid item xs={12}>
           <FormControlLabel
@@ -485,7 +492,7 @@ export default function PopupCont({
             variant="text"
             onClick={() => {
               window.open(
-                "https://chromewebstore.google.com/detail/kiss-translator/bdiifdefkgmcblbcghdlonllpjhhjgof/reviews",
+                "https://chromewebstore.google.com/detail/easy-translator/bdiifdefkgmcblbcghdlonllpjhhjgof/reviews",
                 "_blank"
               );
             }}
@@ -496,7 +503,7 @@ export default function PopupCont({
             variant="text"
             onClick={() => {
               window.open(
-                "https://github.com/fishjar/kiss-translator#%E8%B5%9E%E8%B5%8F",
+                "https://github.com/fishjar/easy-translator#%E8%B5%9E%E8%B5%8F",
                 "_blank"
               );
             }}

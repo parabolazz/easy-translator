@@ -3,6 +3,7 @@ import {
   OPT_DICT_BING,
   OPT_SUG_YOUDAO,
   DEFAULT_HTTP_TIMEOUT,
+  DEFAULT_API_TYPE,
   OPT_TRANS_MICROSOFT,
   DEFAULT_API_LIST,
 } from "./api";
@@ -24,7 +25,7 @@ export const TRANS_MIN_LENGTH = 2; // 最短翻译长度
 export const TRANS_MAX_LENGTH = 100000; // 最长翻译长度
 export const TRANS_NEWLINE_LENGTH = 20; // 换行字符数
 export const DEFAULT_BLACKLIST = [
-  "https://fishjar.github.io/kiss-translator/options.html",
+  "https://fishjar.github.io/easy-translator/options.html",
   "https://translate.google.com",
   "https://www.deepl.com/translator",
 ]; // 禁用翻译名单
@@ -32,7 +33,8 @@ export const DEFAULT_CSPLIST = []; // 禁用CSP名单
 export const DEFAULT_ORILIST = ["https://dict.youdao.com"]; // 移除Origin名单
 
 // 同步设置
-export const OPT_SYNCTYPE_WORKER = "KISS-Worker";
+export const LEGACY_OPT_SYNCTYPE_WORKER = "KISS-Worker";
+export const OPT_SYNCTYPE_WORKER = "Easy-Worker";
 export const OPT_SYNCTYPE_WEBDAV = "WebDAV";
 export const OPT_SYNCTOKEN_PERFIX = "kt_";
 export const OPT_SYNCTYPE_ALL = [OPT_SYNCTYPE_WORKER, OPT_SYNCTYPE_WEBDAV];
@@ -163,11 +165,44 @@ export const DEFAULT_MOUSE_HOVER_SETTING = {
 export const DEFAULT_CEFR_SETTING = {
   enabled: false,
   level: 0,
+  assessmentCompleted: false,
+  levelSource: "unset",
+  lastPromptFrom: "",
+};
+
+const getEnabledApiSlugs = (transApis = DEFAULT_API_LIST) =>
+  (Array.isArray(transApis) ? transApis : DEFAULT_API_LIST)
+    .filter((api) => api && api.apiSlug && !api.isDisabled)
+    .map((api) => api.apiSlug);
+
+export const getEnabledApiSlugSet = (transApis = DEFAULT_API_LIST) =>
+  new Set(getEnabledApiSlugs(transApis));
+
+const getDefaultApiFallback = (transApis = DEFAULT_API_LIST) => {
+  const enabledApiSlugs = getEnabledApiSlugs(transApis);
+  if (enabledApiSlugs.includes(DEFAULT_API_TYPE)) {
+    return DEFAULT_API_TYPE;
+  }
+  return enabledApiSlugs[0] || DEFAULT_API_TYPE;
+};
+
+export const normalizeDefaultApiSlug = (
+  defaultApiSlug,
+  transApis = DEFAULT_API_LIST
+) => {
+  if (
+    typeof defaultApiSlug === "string" &&
+    defaultApiSlug &&
+    getEnabledApiSlugSet(transApis).has(defaultApiSlug)
+  ) {
+    return defaultApiSlug;
+  }
+  return getDefaultApiFallback(transApis);
 };
 
 export const DEFAULT_SETTING = {
   darkMode: "auto", // 深色模式
-  uiLang: "en", // 界面语言
+  uiLang: "zh", // 界面语言
   // fetchLimit: DEFAULT_FETCH_LIMIT, // 最大任务数量(移至rule，作废)
   // fetchInterval: DEFAULT_FETCH_INTERVAL, // 任务间隔时间(移至rule，作废)
   minLength: TRANS_MIN_LENGTH,
@@ -187,6 +222,7 @@ export const DEFAULT_SETTING = {
   subrulesList: DEFAULT_SUBRULES_LIST, // 订阅列表
   // owSubrule: DEFAULT_OW_RULE, // 覆写订阅规则 (作废)
   transApis: DEFAULT_API_LIST, // 翻译接口 (v2.0 对象改为数组)
+  defaultApiSlug: DEFAULT_API_TYPE, // 默认翻译服务
   // mouseKey: OPT_TIMING_PAGESCROLL, // 翻译时机/鼠标悬停翻译(移至rule，作废)
   shortcuts: DEFAULT_SHORTCUTS, // 快捷键
   inputRule: DEFAULT_INPUT_RULE, // 输入框设置
@@ -204,8 +240,49 @@ export const DEFAULT_SETTING = {
   preInit: true, // 是否预加载脚本
   transAllnow: false, // 是否立即全部翻译
   subtitleSetting: DEFAULT_SUBTITLE_SETTING, // 字幕设置
+  cefrSetting: { ...DEFAULT_CEFR_SETTING }, // CEFR 设置
   logLevel: LogLevel.INFO.value, // 日志级别
   rootMargin: 500, // 提前触发翻译
   customStyles: DEFAULT_CUSTOM_STYLES, // 自定义样式列表
   cefrSetting: DEFAULT_CEFR_SETTING, // CEFR 词汇学习
+};
+
+const isObject = (value) =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+export const normalizeCEFRSetting = (cefrSetting) => {
+  const setting = isObject(cefrSetting) ? cefrSetting : {};
+  return { ...DEFAULT_CEFR_SETTING, ...setting };
+};
+
+export const normalizeSetting = (setting) => {
+  const baseSetting = isObject(setting) ? setting : {};
+  const transApis = Array.isArray(baseSetting.transApis)
+    ? baseSetting.transApis
+    : DEFAULT_API_LIST;
+  return {
+    ...DEFAULT_SETTING,
+    ...baseSetting,
+    transApis,
+    defaultApiSlug: normalizeDefaultApiSlug(
+      baseSetting.defaultApiSlug,
+      transApis
+    ),
+    cefrSetting: normalizeCEFRSetting(baseSetting.cefrSetting),
+  };
+};
+
+export const normalizeSync = (sync) => {
+  const baseSync = isObject(sync) ? sync : {};
+  const syncType =
+    baseSync.syncType === LEGACY_OPT_SYNCTYPE_WORKER
+      ? OPT_SYNCTYPE_WORKER
+      : baseSync.syncType;
+  return {
+    ...DEFAULT_SYNC,
+    ...baseSync,
+    syncType: OPT_SYNCTYPE_ALL.includes(syncType)
+      ? syncType
+      : DEFAULT_SYNC.syncType,
+  };
 };

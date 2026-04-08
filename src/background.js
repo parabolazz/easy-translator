@@ -25,6 +25,7 @@ import {
   MSG_CLEAR_CACHES,
   MSG_OPEN_SEPARATE_WINDOW,
   STOKEY_SEPARATE_WINDOW,
+  LEGACY_STOKEY_SEPARATE_WINDOW,
   PORT_STREAM_FETCH,
   MSG_UPDATE_ICON,
 } from "./config";
@@ -37,19 +38,20 @@ import { trySyncAllSubRules } from "./libs/subRules";
 import { saveRule } from "./libs/rules";
 import { getCurTabId } from "./libs/msg";
 import { injectInlineJsBg, injectInternalCss } from "./libs/injector";
-import { kissLog, logger } from "./libs/log";
+import { easyLog, logger } from "./libs/log";
 import { chromeDetect, chromeTranslate } from "./libs/builtinAI";
+import { openOptionsHash, shouldOpenCEFROnInstall } from "./libs/optionsPage";
 
-globalThis.__KISS_CONTEXT__ = "background";
+globalThis.__EASY_CONTEXT__ = "background";
 
 async function updateIcon(isActive, tabId) {
   const suffix = isActive ? "_active" : "";
   const path = {
-    16: `images/logo16${suffix}.png`,
-    32: `images/logo32${suffix}.png`,
-    48: `images/logo48${suffix}.png`,
-    128: `images/logo128${suffix}.png`,
-    192: `images/logo192${suffix}.png`,
+    16: `/images/logo16${suffix}.png`,
+    32: `/images/logo32${suffix}.png`,
+    48: `/images/logo48${suffix}.png`,
+    128: `/images/logo128${suffix}.png`,
+    192: `/images/logo192${suffix}.png`,
   };
   try {
     // 兼容 v2 清单下的 Firefox
@@ -59,7 +61,7 @@ async function updateIcon(isActive, tabId) {
       await browser.browserAction.setIcon({ path, tabId });
     }
   } catch (err) {
-    kissLog("updateIcon error", err);
+    easyLog("updateIcon error", err);
   }
 }
 
@@ -91,9 +93,9 @@ async function persistSeparateWindowBounds(bounds) {
   if (!bounds) return;
   try {
     await browser.storage.local.set({ [STOKEY_SEPARATE_WINDOW]: bounds });
-    kissLog("Final separate window bounds saved to storage", bounds);
+    easyLog("Final separate window bounds saved to storage", bounds);
   } catch (err) {
-    kissLog("Save separate window bounds error", err);
+    easyLog("Save separate window bounds error", err);
   }
 }
 
@@ -108,13 +110,18 @@ async function openSeparateWindowWithSavedBounds() {
       const existingWin = allWindows.find((w) => w.id === separateWindowId);
       if (existingWin) {
         await browser.windows.update(separateWindowId, { focused: true });
-        kissLog("Separate window is ready");
+        easyLog("Separate window is ready");
         return existingWin;
       }
     }
 
-    const stored = await browser.storage.local.get(STOKEY_SEPARATE_WINDOW);
-    const saved = stored && stored[STOKEY_SEPARATE_WINDOW];
+    const stored = await browser.storage.local.get([
+      STOKEY_SEPARATE_WINDOW,
+      LEGACY_STOKEY_SEPARATE_WINDOW,
+    ]);
+    const saved =
+      stored?.[STOKEY_SEPARATE_WINDOW] ||
+      stored?.[LEGACY_STOKEY_SEPARATE_WINDOW];
     const bounds = Object.assign(
       {},
       DEFAULT_SEPARATE_WINDOW_BOUNDS,
@@ -141,7 +148,7 @@ async function openSeparateWindowWithSavedBounds() {
 
     return win;
   } catch (err) {
-    kissLog("open separate window error", err);
+    easyLog("open separate window error", err);
   }
 }
 
@@ -158,7 +165,7 @@ async function updateCacheFromActual(windowId) {
         width: Math.round(win.width),
         height: Math.round(win.height),
       };
-      kissLog("Bounds cached via fallback:", lastKnownBounds);
+      easyLog("Bounds cached via fallback:", lastKnownBounds);
       // todo: 获取到的left和top均为0？
       // todo: firefox 每重新打开一次，窗口愈来愈大？
     }
@@ -216,7 +223,7 @@ async function addContextMenus(contextMenuType = 1) {
   try {
     await browser.contextMenus.removeAll();
   } catch (err) {
-    kissLog("remove contextMenus", err);
+    easyLog("remove contextMenus", err);
   }
 
   switch (contextMenuType) {
@@ -337,7 +344,7 @@ async function updateCspRules({ csplist, orilist }) {
       });
     }
   } catch (err) {
-    kissLog("update csp rules", err);
+    easyLog("update csp rules", err);
   }
 }
 
@@ -353,7 +360,7 @@ async function registerMsgDisplayScript() {
 /**
  * 插件安装
  */
-browser.runtime.onInstalled.addListener(async () => {
+browser.runtime.onInstalled.addListener(async (details) => {
   await tryInitDefaultData();
 
   //在thunderbird中注册脚本
@@ -361,8 +368,8 @@ browser.runtime.onInstalled.addListener(async () => {
     registerMsgDisplayScript();
   }
 
-  const { contextMenuType, csplist, orilist, subrulesList } =
-    await getSettingWithDefault();
+  const setting = await getSettingWithDefault();
+  const { contextMenuType, csplist, orilist, subrulesList } = setting;
 
   // 右键菜单
   addContextMenus(contextMenuType);
@@ -372,6 +379,10 @@ browser.runtime.onInstalled.addListener(async () => {
 
   // 同步订阅规则
   trySyncAllSubRules({ subrulesList });
+
+  if (shouldOpenCEFROnInstall(details, setting)) {
+    await openOptionsHash();
+  }
 });
 
 /**

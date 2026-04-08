@@ -11,7 +11,7 @@ import {
 import { loadOrFetchSubRules } from "./subRules";
 import { getRulesWithDefault, setRules } from "./storage";
 import { trySyncRules } from "./sync";
-import { kissLog } from "./log";
+import { easyLog } from "./log";
 
 function mergeSelectors(defaultStr, userStr) {
   if (!userStr || !userStr.trim()) {
@@ -187,7 +187,7 @@ export const matchRule = async (href, { injectRules, subrulesList }) => {
         matchedSubRule = findMatchingRule(subRules, href);
       }
     } catch (err) {
-      kissLog("load injectRules", err);
+      easyLog("load injectRules", err);
     }
   }
 
